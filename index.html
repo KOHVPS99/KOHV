@@ -1,209 +1,958 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>PS99 Recruiting — KOHV & DEWP</title>
 
 <style>
 :root{
   --text:#EAF0FF;
   --muted:#A9B3D8;
-  --line:rgba(255,255,255,.18);
-  --radius:20px;
-  --shadow:0 18px 60px rgba(0,0,0,.6);
+  --muted2:#8C97C6;
+  --line:rgba(255,255,255,.16);
+  --line2:rgba(255,255,255,.10);
+
   --kohv:#7C4DFF;
   --dewp:#34D399;
   --discord:#5865F2;
+
+  --warn:#FFD166;
+  --good:#7CFFF4;
+  --bad:#ff4d6d;
+
+  --radius:28px;
+  --radius2:18px;
+
+  --shadow:0 26px 95px rgba(0,0,0,.72);
+  --shadow2:0 18px 55px rgba(0,0,0,.55);
+  --shadow3:0 10px 30px rgba(0,0,0,.55);
+
+  --ease:cubic-bezier(.2,.9,.2,1);
+
+  --glass:rgba(0,0,0,.26);
+  --glass2:rgba(0,0,0,.14);
 }
 
 *{box-sizing:border-box}
-html,body{height:100%;}
-
-/* BACKGROUND */
-.bg{
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  background:
-    url("https://media.discordapp.net/attachments/1385938698356392077/1454271317955186931/IMG_2396.gif?ex=69507b35&is=694f29b5&hm=408e10e8d1f932f3af215d348e36c7d0f41775be3150bc7f6ef11739a5a1eac0&=")
-    center / cover no-repeat;
-}
-.bg::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.75));
-}
-
+html,body{height:100%}
 body{
   margin:0;
-  font-family:system-ui,Segoe UI,Roboto,Arial;
+  font-family:system-ui, Segoe UI, Roboto, Arial;
   color:var(--text);
-  background:#000;
+  background:#050714;
+  overflow-x:hidden;
 }
 
-.wrap{
-  max-width:1100px;
-  margin:auto;
-  padding:24px 16px 80px;
+.bg{
+  position:fixed; inset:0; z-index:-8;
+  background:url("https://media.discordapp.net/attachments/1385938698356392077/1454271317955186931/IMG_2396.gif?ex=69507b35&is=694f29b5&hm=408e10e8d1f932f3af215d348e36c7d0f41775be3150bc7f6ef11739a5a1eac0&=") center/cover no-repeat;
+}
+.bg::after{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(950px 650px at 16% 10%, rgba(124,77,255,.30), transparent 58%),
+    radial-gradient(950px 650px at 84% 12%, rgba(52,211,153,.22), transparent 60%),
+    linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.82));
 }
 
-/* HEADER + CARDS */
-header,.card,.strip{
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  background:rgba(0,0,0,.55);
-  backdrop-filter: blur(6px);
+.noise{
+  position:fixed; inset:0; z-index:-7; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+  opacity:.40;
+}
+
+.sweep{
+  position:fixed; inset:-40%; z-index:-6; pointer-events:none;
+  background:linear-gradient(110deg, transparent 35%, rgba(255,255,255,.09), transparent 65%);
+  transform:translateX(-40%) rotate(12deg);
+  animation:sweep 10.5s linear infinite;
+  mix-blend-mode:overlay;
+  opacity:.50;
+}
+@keyframes sweep{
+  0%{transform:translateX(-40%) rotate(12deg)}
+  100%{transform:translateX(40%) rotate(12deg)}
+}
+
+.wrap{max-width:1180px;margin:auto;padding:18px 16px 110px}
+
+.card{
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:calc(var(--radius) + 10px);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,.18));
+  backdrop-filter: blur(14px);
   box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
 }
+.card::before{
+  content:"";
+  position:absolute; inset:-2px; pointer-events:none;
+  background:
+    radial-gradient(640px 340px at 16% 0%, rgba(124,77,255,.24), transparent 62%),
+    radial-gradient(640px 340px at 84% 0%, rgba(52,211,153,.17), transparent 62%);
+  opacity:.85;
+}
+.card > *{position:relative}
 
-header{padding:18px}
-h1{margin:0;font-size:clamp(24px,3vw,36px)}
-p{color:var(--muted);line-height:1.5}
+/* Sticky nav */
+.nav{
+  position:sticky; top:10px; z-index:60;
+  margin:10px auto 14px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.18));
+  backdrop-filter: blur(14px);
+  box-shadow:var(--shadow3);
+}
+.navInner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:10px 12px;
+}
+.brand{display:flex;align-items:center;gap:10px;user-select:none}
+.brandDot{
+  width:12px;height:12px;border-radius:999px;
+  background:conic-gradient(from 180deg, var(--kohv), var(--dewp), var(--discord), var(--kohv));
+  box-shadow:0 0 22px rgba(255,255,255,.16);
+}
+.brandTitle{font-weight:1300;letter-spacing:.3px;font-size:13px;opacity:.95}
+.navLinks{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.navLinks a{
+  text-decoration:none;color:var(--muted);
+  font-weight:1100;font-size:12.5px;
+  padding:8px 10px;border-radius:999px;border:1px solid transparent;
+  transition:background .16s var(--ease), border-color .16s var(--ease), color .16s var(--ease);
+}
+.navLinks a:hover{color:rgba(255,255,255,.92);background:rgba(0,0,0,.24);border-color:rgba(255,255,255,.12)}
+.navRight{display:flex;align-items:center;gap:8px}
+
+.iconBtn{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.24);
+  color:var(--text);
+  border-radius:999px;
+  padding:9px 10px;
+  cursor:pointer;
+  font-weight:1300;
+  transition:transform .15s var(--ease), filter .15s var(--ease);
+}
+.iconBtn:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.iconBtn:active{transform:translateY(0);filter:brightness(.98)}
+
+/* Hero */
+.hero{margin-top:14px}
+.heroInner{padding:26px 22px}
+h1{
+  margin:0;
+  font-size:clamp(30px,3.3vw,48px);
+  line-height:1.05;
+}
+.sub{margin:10px 0 0;color:var(--muted);line-height:1.65;max-width:86ch}
+.inlineGlow{
+  display:inline-block;padding:2px 10px;border-radius:999px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.14);
+}
+.kohvTxt{color:var(--kohv);font-weight:1300}
+.dewpTxt{color:var(--dewp);font-weight:1300}
+
+.heroTop{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
+
+/* Stats row */
+.stats{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr));
+  gap:10px;
+}
+@media(max-width:900px){ .stats{grid-template-columns:repeat(2, minmax(0,1fr));} }
+.statCard{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  border-radius:18px;
+  padding:12px 12px;
+}
+.statTop{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.statLabel{color:var(--muted);font-weight:1100;font-size:12px}
+.statNum{font-weight:1500;font-size:20px}
+.statHint{margin-top:6px;color:var(--muted2);font-weight:1000;font-size:12px;line-height:1.35}
 
 /* CTA */
-.cta{
-  margin-top:14px;
+.cta{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:14px 20px;border-radius:18px;
+  font-weight:1400;text-decoration:none;color:#fff;
+  border:1px solid rgba(255,255,255,.16);
+  background:
+    radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.20), transparent 55%),
+    linear-gradient(180deg, rgba(88,101,242,1), rgba(88,101,242,.70));
+  box-shadow:0 24px 70px rgba(88,101,242,.25);
+  transition:transform .16s var(--ease), filter .16s var(--ease), box-shadow .16s var(--ease);
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.07);box-shadow:0 34px 92px rgba(88,101,242,.30)}
+.btn:active{transform:translateY(0);filter:brightness(.98)}
+.btn.secondary{background:rgba(0,0,0,.28);box-shadow:var(--shadow2)}
+.smallNote{
+  color:var(--muted);
+  font-weight:1200;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  padding:10px 12px;
+  border-radius:16px;
+}
+
+/* Control bar (tabs + search) */
+.controls{
+  margin-top:18px;
   display:flex;
   gap:10px;
   flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  border-radius:20px;
+  padding:12px 12px;
+}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  color:var(--muted);
+  padding:9px 12px;
+  border-radius:999px;
+  font-weight:1300;
+  cursor:pointer;
+  transition:filter .15s var(--ease), transform .15s var(--ease);
+}
+.tab:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.tab.active{color:#fff;border-color:rgba(255,255,255,.24)}
+.tab.kohv.active{background:rgba(124,77,255,.18)}
+.tab.dewp.active{background:rgba(52,211,153,.16)}
+.tab.all.active{background:rgba(88,101,242,.16)}
+
+.searchWrap{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.search{
+  width:min(360px, 90vw);
+  padding:11px 12px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.26);
+  color:var(--text);
+  outline:none;
+  font-weight:1200;
+}
+.search::placeholder{color:rgba(169,179,216,.75)}
+.toggleRow{display:flex;gap:8px;flex-wrap:wrap}
+.pillBtn{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  color:var(--muted);
+  padding:10px 12px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:1300;
 }
 
-/* JOIN BUTTON ONLY */
-.btn{
-  padding:12px 18px;
-  border-radius:14px;
-  font-weight:900;
-  text-decoration:none;
-  color:#fff;
-  background:var(--discord);
-  box-shadow:0 0 25px rgba(88,101,242,.5);
+/* Banner */
+.banner{
+  margin-top:18px;
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(0,0,0,.20));
+  backdrop-filter: blur(12px);
+  display:flex;gap:12px;align-items:center;justify-content:space-between;
+  padding:16px 16px;
+  flex-wrap:wrap;
+}
+.bannerLeft h2{margin:0;font-size:17px;letter-spacing:.4px}
+.bannerLeft p{margin:6px 0 0;color:var(--muted);line-height:1.55}
+.bannerRight{display:flex;gap:10px;flex-wrap:wrap}
+.statTag{
+  padding:10px 12px;border-radius:16px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  font-weight:1300;color:rgba(255,255,255,.92);
+  font-size:13px;
 }
 
-/* GIVEAWAYS */
-.strip{margin-top:16px;padding:16px}
+/* Sections */
+.sectionTitle{
+  margin:22px 0 10px;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;
+}
+.sectionTitle h2{margin:0;font-size:18px;letter-spacing:.4px}
+.sectionTitle p{margin:0;color:var(--muted);font-weight:1000;font-size:13px}
 
-/* GRID */
-.grid{margin-top:18px;display:grid;gap:16px}
-@media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
-.card{padding:16px}
+/* Clan grid */
+.grid{display:grid;gap:16px}
+@media(min-width:940px){.grid{grid-template-columns:1fr 1fr}}
+.clanCard{padding:18px;transition:transform .18s var(--ease), border-color .18s var(--ease)}
+.clanCard:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.24)}
+.clanTop{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.leftHead{display:flex;align-items:center;gap:14px}
+.logo{
+  width:74px;height:74px;border-radius:22px;
+  border:1px solid rgba(255,255,255,.16);
+  overflow:hidden;background:rgba(0,0,0,.22);
+  box-shadow:0 22px 55px rgba(0,0,0,.35);
+}
+.logo img{width:100%;height:100%;object-fit:cover}
+.nameBlock h3{margin:0;font-size:26px;letter-spacing:.2px}
+.rankLine{margin-top:6px;font-weight:1300;color:rgba(255,255,255,.92);display:flex;gap:8px;align-items:center}
 
-/* CLANS */
-.clanHeader{display:flex;gap:14px;align-items:center;margin-bottom:10px}
-.clanLogo{
-  width:64px;height:64px;border-radius:16px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.4);
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 12px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.26);
+  color:var(--muted);
+  font-size:12.5px;
+  font-weight:1300;
+}
+.badge b{font-weight:1500}
+.badge.k b{color:var(--kohv)}
+.badge.d b{color:var(--dewp)}
+
+.divider{height:1px;background:rgba(255,255,255,.10);margin:14px 0 0}
+
+.req{
+  margin-top:16px;
+  display:grid;
+  gap:10px;
+}
+.reqItem{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 12px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.22);
+}
+.reqIcon{
+  width:30px;height:30px;border-radius:12px;
+  display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+  flex:0 0 30px;
+  font-size:16px;
+}
+.reqText{line-height:1.35}
+.reqText b{color:rgba(255,255,255,.96)}
+
+/* How + FAQ */
+.columns{display:grid;gap:16px}
+@media(min-width:940px){.columns{grid-template-columns:1.1fr .9fr}}
+.panel{padding:18px}
+.panel h3{margin:0 0 10px;font-size:16px;letter-spacing:.35px}
+.panel p{margin:0;color:var(--muted);line-height:1.55}
+.steps{margin-top:12px;display:grid;gap:10px}
+.step{
+  display:flex;gap:12px;padding:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.22);
+  border-radius:18px;
+}
+.stepNum{
+  width:34px;height:34px;border-radius:14px;
+  display:grid;place-items:center;
+  font-weight:1500;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+}
+.stepText{color:var(--muted);line-height:1.4}
+.stepText b{color:rgba(255,255,255,.95)}
+
+.faq{margin-top:12px;display:grid;gap:10px}
+.qa{
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.22);
+  border-radius:18px;
   overflow:hidden;
 }
-.clanLogo img{width:100%;height:100%;object-fit:cover}
-.rank{font-weight:900;margin-top:4px}
-
-.list{margin-top:12px;padding:0;list-style:none}
-.list li{
-  padding:10px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:rgba(0,0,0,.45);
-  margin-bottom:8px;
+.q{
+  width:100%;text-align:left;cursor:pointer;
+  padding:12px 12px;background:transparent;border:0;
+  color:var(--text);font-weight:1400;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.q span{color:var(--muted2);font-weight:1400}
+.a{max-height:0;overflow:hidden;transition:max-height .25s var(--ease);padding:0 12px}
+.aInner{padding:0 0 12px;color:var(--muted);line-height:1.55}
+.chev{
+  width:28px;height:28px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+  display:grid;place-items:center;
+  flex:0 0 28px;
+  transition:transform .2s var(--ease);
 }
 
-/* TRANSPARENT FOOTER */
+/* Footer */
 .footer{
-  margin-top:28px;
-  padding:26px 20px;
-  border-radius:24px;
-  border:1px solid rgba(255,255,255,.25);
+  margin-top:22px;
+  padding:20px 18px;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.18);
   background:transparent;
   text-align:center;
 }
 .footer .main{
-  font-size:24px;
-  font-weight:1000;
-  text-shadow:0 0 25px rgba(0,0,0,.9);
+  font-size:23px;
+  font-weight:1500;
+  text-shadow:0 0 26px rgba(0,0,0,.95);
 }
 .footer .support{
-  margin-top:14px;
+  margin-top:10px;
   font-size:19px;
-  font-weight:900;
-  color:#FFD166;
-  text-shadow:0 0 20px rgba(0,0,0,1);
+  font-weight:1300;
+  color:var(--warn);
+  text-shadow:0 0 24px rgba(0,0,0,1);
 }
-.footer .support span{color:#7CFFF4}
+.footer .support span{color:var(--good)}
+.footerBtns{
+  margin-top:14px;
+  display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
+}
+.footerBtns button{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  color:var(--text);
+  padding:10px 12px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:1300;
+}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease), transform .5s var(--ease)}
+.reveal.on{opacity:1;transform:translateY(0)}
+
+/* Back to top */
+.toTop{
+  position:fixed;right:16px;bottom:16px;z-index:80;
+  display:none;border-radius:999px;padding:11px 12px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(0,0,0,.35);
+  color:var(--text);
+  cursor:pointer;
+  font-weight:1500;
+  box-shadow:var(--shadow3);
+  backdrop-filter: blur(12px);
+}
+.toTop:hover{filter:brightness(1.08)}
+
+/* Toast */
+.toast{
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:999;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(0,0,0,.55);
+  backdrop-filter: blur(14px);
+  box-shadow:var(--shadow2);
+  border-radius:18px;
+  padding:12px 14px;
+  max-width:92vw;
+  display:none;
+  gap:10px;
+  align-items:center;
+  font-weight:1200;
+}
+.toast b{color:rgba(255,255,255,.95)}
+.toast small{color:var(--muted);font-weight:1000}
+
+/* Reduced motion */
+.reduce *{
+  animation:none !important;
+  transition:none !important;
+  scroll-behavior:auto !important;
+}
+
+@media(max-width:560px){
+  .heroInner{padding:22px 16px}
+  .clanCard{padding:16px}
+  .logo{width:64px;height:64px;border-radius:20px}
+  .nameBlock h3{font-size:24px}
+  .btn{width:100%}
+  .smallNote{width:100%;text-align:center}
+  .navLinks{display:none}
+  .controls{justify-content:center}
+}
 </style>
 </head>
 
 <body>
-
 <div class="bg"></div>
+<div class="noise"></div>
+<div class="sweep"></div>
 
 <div class="wrap">
+  <!-- NAV -->
+  <div class="nav reveal">
+    <div class="navInner">
+      <div class="brand">
+        <div class="brandDot"></div>
+        <div class="brandTitle">PS99 • KOHV & DEWP Recruiting</div>
+      </div>
 
-<header>
-  <h1>
-    PS99 Recruiting —
-    <span style="color:var(--kohv)">KOHV</span> (#9) &
-    <span style="color:var(--dewp)">DEWP</span> (#58)
-  </h1>
-  <p>
-    Competitive PS99 clans with <b>TONS of giveaways</b>, events, and active Discord.
-  </p>
+      <div class="navLinks">
+        <a href="#clans">Clans</a>
+        <a href="#how">How</a>
+        <a href="#faq">FAQ</a>
+        <a href="#support">Support</a>
+      </div>
 
-  <!-- ONLY THIS BUTTON EXISTS -->
-  <div class="cta">
-    <a class="btn" href="https://discord.gg/7ZaWwJKFsz" target="_blank">
-      🚀 Join Discord
-    </a>
+      <div class="navRight">
+        <button class="iconBtn" id="copyInvite" title="Copy Discord Invite">📋 Invite</button>
+        <button class="iconBtn" id="openDiscord" title="Open Discord">💬</button>
+      </div>
+    </div>
   </div>
 
-  <div class="strip">
-    <h2>🎁 GIVEAWAYS & EVENTS</h2>
-    <p>Huge giveaways, gems, huges, item drops, clan battle rewards and AFK rewards.</p>
-  </div>
-</header>
+  <!-- HERO -->
+  <section class="card hero reveal" id="top">
+    <div class="heroInner">
+      <div class="heroTop">
+        <div>
+          <h1>
+            PS99 Recruiting —
+            <span class="kohvTxt">KOHV</span> (#9) &
+            <span class="dewpTxt">DEWP</span> (#58)
+          </h1>
+          <div class="sub">
+            Competitive PS99 clans with <span class="inlineGlow"><b>TONS of giveaways</b></span>, events, and a super active Discord.
+            Join if you meet requirements.
+          </div>
 
-<section class="grid">
+          <div class="stats">
+            <div class="statCard">
+              <div class="statTop"><div class="statLabel">KOHV Rank</div><div class="statNum" data-count="9">0</div></div>
+              <div class="statHint">Top clan (hard reqs)</div>
+            </div>
+            <div class="statCard">
+              <div class="statTop"><div class="statLabel">DEWP Rank</div><div class="statNum" data-count="58">0</div></div>
+              <div class="statHint">Second clan (still competitive)</div>
+            </div>
+            <div class="statCard">
+              <div class="statTop"><div class="statLabel">Giveaways</div><div class="statNum" data-count="999+">0</div></div>
+              <div class="statHint">Tons of events + rewards</div>
+            </div>
+            <div class="statCard">
+              <div class="statTop"><div class="statLabel">Support</div><div class="statNum" data-count="2">0</div></div>
+              <div class="statHint">DM helpers if stuck</div>
+            </div>
+          </div>
 
-<div class="card">
-  <div class="clanHeader">
-    <div class="clanLogo"><img src="https://cdn.discordapp.com/emojis/1454254211461021756.webp?size=96"></div>
-    <div><h2>KOHV</h2><div class="rank">🏆 Global Rank #9</div></div>
+          <div class="chips">
+            <div class="chip">🎁 Giveaways</div>
+            <div class="chip">⚔️ Clan Battles</div>
+            <div class="chip">🌙 AFK Rewards</div>
+            <div class="chip">✅ Fast Tickets</div>
+            <div class="chip">🧠 Mastery Focus</div>
+          </div>
+
+          <div class="cta">
+            <a class="btn" href="https://discord.gg/7ZaWwJKFsz" target="_blank" rel="noreferrer">
+              🚀 Join Discord
+            </a>
+            <a class="btn secondary" href="#how">🧾 How to Join</a>
+            <div class="smallNote">
+              📩 If you’re facing problems, DM <b>iidxpelord</b> or <b>BammieWass07</b>
+            </div>
+          </div>
+
+          <div class="controls">
+            <div class="tabs">
+              <button class="tab all active" data-show="all">Show All</button>
+              <button class="tab kohv" data-show="KOHV">KOHV</button>
+              <button class="tab dewp" data-show="DEWP">DEWP</button>
+            </div>
+
+            <div class="searchWrap">
+              <input class="search" id="search" placeholder="Search requirements (ex: AFK, Rank, Value, Mastery)" />
+              <div class="toggleRow">
+                <button class="pillBtn" id="toggleMotion">🌀 Reduce motion</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="banner">
+        <div class="bannerLeft">
+          <h2>🎁 GIVEAWAYS & EVENTS</h2>
+          <p>
+            Gems, huges, item drops, clan battle rewards, AFK rewards + surprise events during updates.
+            <br><b style="color:rgba(255,255,255,.92)">More activity = more rewards.</b>
+          </p>
+        </div>
+        <div class="bannerRight">
+          <div class="statTag">🔥 Active Discord</div>
+          <div class="statTag">💎 Rewards</div>
+          <div class="statTag">🏆 Competitive</div>
+          <div class="statTag">⚡ Quick Review</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLANS -->
+  <div class="sectionTitle reveal" id="clans">
+    <div>
+      <h2>Clan Requirements</h2>
+      <p>Use tabs + search to filter. Be responsive on Discord.</p>
+    </div>
   </div>
-  <ul class="list">
-    <li>🖥️ 24/7 AFK</li><li>🎟️ Rank 20+</li><li>🚗 15+ RB / Shiny Huges</li>
-    <li>💎 Able to spend 5B+ per battle</li><li>🏆 Maxed important Masteries</li>
-    <li>🧩 Luck, Extra Hatches & Enchant Slots</li><li>💰 20B+ Value</li>
-    <li>📜 Good battle history</li><li>👍 Active on Discord</li>
-  </ul>
+
+  <section class="grid">
+    <!-- KOHV -->
+    <article class="card clanCard reveal" data-clan="KOHV">
+      <div class="clanTop">
+        <div class="leftHead">
+          <div class="logo">
+            <img src="https://cdn.discordapp.com/emojis/1454254211461021756.webp?size=96" alt="KOHV">
+          </div>
+          <div class="nameBlock">
+            <h3>KOHV</h3>
+            <div class="rankLine">🏆 Global Rank #9</div>
+          </div>
+        </div>
+        <div class="badge k">Clan: <b>KOHV</b></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="req">
+        <div class="reqItem" data-key="24/7 afk">
+          <div class="reqIcon">🖥️</div>
+          <div class="reqText"><b>24/7 AFK</b> required</div>
+        </div>
+        <div class="reqItem" data-key="rank 20">
+          <div class="reqIcon">🎟️</div>
+          <div class="reqText"><b>Rank 20+</b></div>
+        </div>
+        <div class="reqItem" data-key="15 rb shiny huges">
+          <div class="reqIcon">🚗</div>
+          <div class="reqText"><b>15+ RB / Shiny Huges</b></div>
+        </div>
+        <div class="reqItem" data-key="spend 5b battle">
+          <div class="reqIcon">💎</div>
+          <div class="reqText"><b>Able to spend 5B+</b> each battle if required</div>
+        </div>
+        <div class="reqItem" data-key="maxed masteries">
+          <div class="reqIcon">🏆</div>
+          <div class="reqText"><b>Maxed</b> important Masteries</div>
+        </div>
+        <div class="reqItem" data-key="gamepasses luck extra hatches extra enchant">
+          <div class="reqIcon">🧩</div>
+          <div class="reqText"><b>Gamepasses:</b> Luck, Extra Hatches & Extra Enchant Slots</div>
+        </div>
+        <div class="reqItem" data-key="20b value">
+          <div class="reqIcon">💰</div>
+          <div class="reqText"><b>20B+</b> Value</div>
+        </div>
+        <div class="reqItem" data-key="good clan battle history">
+          <div class="reqIcon">📜</div>
+          <div class="reqText"><b>Good</b> clan battle history</div>
+        </div>
+        <div class="reqItem" data-key="active discord">
+          <div class="reqIcon">👍</div>
+          <div class="reqText"><b>Active</b> on Discord</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- DEWP -->
+    <article class="card clanCard reveal" data-clan="DEWP">
+      <div class="clanTop">
+        <div class="leftHead">
+          <div class="logo">
+            <img src="https://th.bing.com/th/id/OIP.A9hu4BkX7mrthU8IIlMSxwAAAA?w=175&h=176&c=7&r=0&o=7&pid=1.7&rm=3" alt="DEWP">
+          </div>
+          <div class="nameBlock">
+            <h3>DEWP</h3>
+            <div class="rankLine">📈 Global Rank #58</div>
+          </div>
+        </div>
+        <div class="badge d">Clan: <b>DEWP</b></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="req">
+        <div class="reqItem" data-key="16 hours afk">
+          <div class="reqIcon">🖥️</div>
+          <div class="reqText"><b>16+ Hours AFK</b></div>
+        </div>
+        <div class="reqItem" data-key="rank 15">
+          <div class="reqIcon">🎟️</div>
+          <div class="reqText"><b>Rank 15+</b></div>
+        </div>
+        <div class="reqItem" data-key="40 huges">
+          <div class="reqIcon">🚗</div>
+          <div class="reqText"><b>40+ Huges</b></div>
+        </div>
+        <div class="reqItem" data-key="spend 250m battle">
+          <div class="reqIcon">💎</div>
+          <div class="reqText"><b>Able to spend 250M+</b> each battle if required</div>
+        </div>
+        <div class="reqItem" data-key="80 masteries">
+          <div class="reqIcon">🏆</div>
+          <div class="reqText"><b>80+</b> on Important Masteries</div>
+        </div>
+        <div class="reqItem" data-key="2.5b value">
+          <div class="reqIcon">💰</div>
+          <div class="reqText"><b>2.5B+</b> Value</div>
+        </div>
+        <div class="reqItem" data-key="active discord">
+          <div class="reqIcon">👍</div>
+          <div class="reqText"><b>Active</b> on Discord</div>
+        </div>
+        <div class="reqItem" data-key="alt accounts">
+          <div class="reqIcon">➕</div>
+          <div class="reqText"><b>Alt accounts</b> allowed</div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- HOW + FAQ -->
+  <div class="sectionTitle reveal" id="how">
+    <div>
+      <h2>How to Join</h2>
+      <p>Fast process — just don’t ghost DMs.</p>
+    </div>
+  </div>
+
+  <section class="columns">
+    <div class="card panel reveal">
+      <h3>🧾 Join Steps</h3>
+      <p>Follow these and you’ll be handled fast.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="stepNum">1</div>
+          <div class="stepText"><b>Join the Discord</b><br>Open the server invite and verify if needed.</div>
+        </div>
+        <div class="step">
+          <div class="stepNum">2</div>
+          <div class="stepText"><b>Create a ticket / apply</b><br>Say which clan (KOHV/DEWP) and drop your stats.</div>
+        </div>
+        <div class="step">
+          <div class="stepNum">3</div>
+          <div class="stepText"><b>Be responsive</b><br>Inactive on Discord or not replying to DMs = kicked.</div>
+        </div>
+        <div class="step">
+          <div class="stepNum">4</div>
+          <div class="stepText"><b>AFK + participate</b><br>More activity = more rewards.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card panel reveal" id="faq">
+      <h3>❓ FAQ</h3>
+      <p>Quick answers so you don’t get stuck.</p>
+
+      <div class="faq">
+        <div class="qa">
+          <button class="q" type="button">
+            <span>Do I have to be active on Discord?</span><div class="chev">⌄</div>
+          </button>
+          <div class="a"><div class="aInner">Yes. If you’re inactive on Discord or don’t reply to DMs, you will be kicked.</div></div>
+        </div>
+
+        <div class="qa">
+          <button class="q" type="button">
+            <span>Can I apply to DEWP if I don’t meet KOHV?</span><div class="chev">⌄</div>
+          </button>
+          <div class="a"><div class="aInner">Yep. DEWP is still competitive and perfect to grow into KOHV.</div></div>
+        </div>
+
+        <div class="qa">
+          <button class="q" type="button">
+            <span>Are alt accounts allowed?</span><div class="chev">⌄</div>
+          </button>
+          <div class="a"><div class="aInner">Yes, alt accounts are allowed.</div></div>
+        </div>
+
+        <div class="qa">
+          <button class="q" type="button">
+            <span>What if I’m having problems joining?</span><div class="chev">⌄</div>
+          </button>
+          <div class="a"><div class="aInner">DM <b>iidxpelord</b> or <b>BammieWass07</b> and you’ll get help.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer reveal" id="support">
+    <div class="main">
+      ⛔ Inactive on Discord or not replying to DMs = <b>KICK</b><br>
+      ➕ Alt accounts allowed
+    </div>
+    <div class="support">
+      If you’re facing problems, DM:
+      <span id="dm1">iidxpelord</span> • <span id="dm2">BammieWass07</span>
+    </div>
+
+    <div class="footerBtns">
+      <button id="copyDM1">📋 Copy iidxpelord</button>
+      <button id="copyDM2">📋 Copy BammieWass07</button>
+      <button id="copyInvite2">📋 Copy Invite</button>
+    </div>
+  </div>
 </div>
 
-<div class="card">
-  <div class="clanHeader">
-    <div class="clanLogo"><img src="https://th.bing.com/th/id/OIP.A9hu4BkX7mrthU8IIlMSxwAAAA?w=175"></div>
-    <div><h2>DEWP</h2><div class="rank">📈 Global Rank #58</div></div>
-  </div>
-  <ul class="list">
-    <li>🖥️ 16+ Hours AFK</li><li>🎟️ Rank 15+</li><li>🚗 40+ Huges</li>
-    <li>💎 Able to spend 250M+ per battle</li>
-    <li>🏆 80+ Important Masteries</li><li>💰 2.5B+ Value</li>
-    <li>👍 Active on Discord</li>
-  </ul>
+<button class="toTop" id="toTop" title="Back to top">↑</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <div>✅ <b>Copied!</b> <small id="toastMsg">Done</small></div>
 </div>
 
-</section>
+<script>
+const INVITE = "https://discord.gg/7ZaWwJKFsz";
 
-<div class="footer">
-  <div class="main">
-    ⛔ Inactive on Discord or not replying to DMs = <b>KICK</b><br>
-    ➕ Alt accounts allowed
-  </div>
-  <div class="support">
-    If you’re facing problems, DM:
-    <span>iidxpelord</span> • <span>BammieWass07</span>
-  </div>
-</div>
+function toast(msg){
+  const t = document.getElementById("toast");
+  const m = document.getElementById("toastMsg");
+  m.textContent = msg;
+  t.style.display = "flex";
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(()=>{ t.style.display="none"; }, 1600);
+}
 
-</div>
+async function copyText(text, msg){
+  try{
+    await navigator.clipboard.writeText(text);
+    toast(msg || "Copied");
+  }catch(e){
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    toast(msg || "Copied");
+  }
+}
+
+/* Buttons */
+document.getElementById("copyInvite").onclick = ()=> copyText(INVITE, "Discord invite copied");
+document.getElementById("copyInvite2").onclick = ()=> copyText(INVITE, "Discord invite copied");
+document.getElementById("openDiscord").onclick = ()=> window.open(INVITE, "_blank");
+
+document.getElementById("copyDM1").onclick = ()=> copyText("iidxpelord", "Copied iidxpelord");
+document.getElementById("copyDM2").onclick = ()=> copyText("BammieWass07", "Copied BammieWass07");
+
+/* Accordion */
+document.querySelectorAll(".qa").forEach((box)=>{
+  const btn = box.querySelector(".q");
+  const panel = box.querySelector(".a");
+  const chev = box.querySelector(".chev");
+
+  btn.addEventListener("click", ()=>{
+    const isOpen = panel.style.maxHeight && panel.style.maxHeight !== "0px";
+    document.querySelectorAll(".qa .a").forEach((p)=>{ p.style.maxHeight = "0px"; });
+    document.querySelectorAll(".qa .chev").forEach((c)=>{ c.style.transform = "rotate(0deg)"; });
+    if(!isOpen){
+      panel.style.maxHeight = panel.scrollHeight + "px";
+      chev.style.transform = "rotate(180deg)";
+    }
+  });
+});
+
+/* Reveal on scroll */
+const revealEls = Array.from(document.querySelectorAll(".reveal"));
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("on");
+  });
+},{ threshold:.12 });
+revealEls.forEach(el=>io.observe(el));
+
+/* Back to top */
+const toTop = document.getElementById("toTop");
+window.addEventListener("scroll", ()=>{
+  toTop.style.display = (window.scrollY > 500) ? "block" : "none";
+});
+toTop.onclick = ()=> window.scrollTo({ top:0, behavior:"smooth" });
+
+/* Smooth scrolling */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener("click", (e)=>{
+    const id = a.getAttribute("href");
+    const el = document.querySelector(id);
+    if(!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior:"smooth", block:"start" });
+  });
+});
+
+/* Animated counters */
+function animateCounters(){
+  document.querySelectorAll("[data-count]").forEach(el=>{
+    const target = Number(el.getAttribute("data-count") || "0");
+    const start = 0;
+    const duration = 800;
+    const t0 = performance.now();
+    function tick(now){
+      const p = Math.min(1, (now - t0) / duration);
+      const val = Math.floor(start + (target - start) * (1 - Math.pow(1-p, 3)));
+      el.textContent = val;
+      if(p < 1) requestAnimationFrame(tick);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(tick);
+  });
+}
+setTimeout(animateCounters, 250);
+
+/* Tabs + search filter */
+let activeClan = "all";
+const tabs = document.querySelectorAll(".tab");
+const search = document.getElementById("search");
+const clanCards = document.querySelectorAll(".clanCard");
+
+tabs.forEach(t=>{
+  t.addEventListener("click", ()=>{
+    tabs.forEach(x=>x.classList.remove("active"));
+    t.classList.add("active");
+    activeClan = t.dataset.show;
+    applyFilter();
+  });
+});
+
+function applyFilter(){
+  const q = (search.value || "").trim().toLowerCase();
+
+  clanCards.forEach(card=>{
+    const clan = card.dataset.clan;
+    const clanOk = (activeClan === "all") || (clan === activeClan);
+    card.style.display = clanOk ? "" : "none";
+
+    // requirements filter
+    card.querySelectorAll(".reqItem").forEach(item=>{
+      const key = (item.dataset.key || item.textContent || "").toLowerCase();
+      item.style.display = (!q || key.includes(q)) ? "" : "none";
+    });
+  });
+}
+search.addEventListener("input", applyFilter);
+
+/* Reduce motion toggle */
+const toggleMotion = document.getElementById("toggleMotion");
+toggleMotion.addEventListener("click", ()=>{
+  document.body.classList.toggle("reduce");
+  toast(document.body.classList.contains("reduce") ? "Reduced motion ON" : "Reduced motion OFF");
+});
+</script>
 </body>
 </html>
