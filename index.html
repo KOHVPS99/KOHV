@@ -7,156 +7,137 @@
 
 <style>
 :root{
-  --bg:#060814;
   --text:#EAF0FF;
   --muted:#A9B3D8;
-  --line:rgba(255,255,255,.10);
-  --radius:18px;
-  --shadow:0 18px 60px rgba(0,0,0,.55);
+  --line:rgba(255,255,255,.18);
+  --radius:20px;
+  --shadow:0 18px 60px rgba(0,0,0,.6);
   --kohv:#7C4DFF;
   --dewp:#34D399;
   --discord:#5865F2;
 }
 
 *{box-sizing:border-box}
+html,body{height:100%;}
+
+/* BACKGROUND */
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    url("https://media.discordapp.net/attachments/1385938698356392077/1454271317955186931/IMG_2396.gif?ex=69507b35&is=694f29b5&hm=408e10e8d1f932f3af215d348e36c7d0f41775be3150bc7f6ef11739a5a1eac0&=")
+    center / cover no-repeat;
+}
+.bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.75));
+}
+
 body{
   margin:0;
   font-family:system-ui,Segoe UI,Roboto,Arial;
-  background:
-    radial-gradient(1000px 600px at 20% 10%, rgba(124,77,255,.20), transparent 55%),
-    radial-gradient(1000px 600px at 80% 15%, rgba(52,211,153,.18), transparent 55%),
-    var(--bg);
   color:var(--text);
+  background:#000;
 }
 
 .wrap{
   max-width:1100px;
   margin:auto;
-  padding:24px 16px 60px;
+  padding:24px 16px 80px;
 }
 
-/* HEADER */
-header{
+/* HEADER + CARDS */
+header,.card,.strip{
   border:1px solid var(--line);
   border-radius:var(--radius);
-  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  background:rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
   box-shadow:var(--shadow);
-  padding:18px;
 }
 
-h1{
-  margin:0;
-  font-size:clamp(24px,3vw,36px);
-}
-p{
-  color:var(--muted);
-  line-height:1.5;
-}
+header{padding:18px}
+h1{margin:0;font-size:clamp(24px,3vw,36px)}
+p{color:var(--muted);line-height:1.5}
 
+/* CTA */
 .cta{
   margin-top:14px;
   display:flex;
   gap:10px;
   flex-wrap:wrap;
 }
+
+/* JOIN BUTTON ONLY */
 .btn{
-  padding:12px 16px;
+  padding:12px 18px;
   border-radius:14px;
-  font-weight:800;
+  font-weight:900;
   text-decoration:none;
-  color:white;
+  color:#fff;
   background:var(--discord);
-}
-.btn.secondary{
-  background:rgba(255,255,255,.08);
-  border:1px solid var(--line);
+  box-shadow:0 0 25px rgba(88,101,242,.5);
 }
 
-/* GIVEAWAY STRIP */
-.strip{
-  margin-top:16px;
-  padding:16px;
-  border-radius:var(--radius);
-  border:1px solid var(--line);
-  background:linear-gradient(180deg, rgba(255,183,3,.14), rgba(0,0,0,.20));
-}
-.strip h2{
-  margin:0 0 6px;
-}
-.strip p{
-  margin:0;
-}
+/* GIVEAWAYS */
+.strip{margin-top:16px;padding:16px}
 
 /* GRID */
-.grid{
-  margin-top:18px;
-  display:grid;
-  gap:16px;
-}
-@media(min-width:900px){
-  .grid{grid-template-columns:1fr 1fr;}
-}
+.grid{margin-top:18px;display:grid;gap:16px}
+@media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+.card{padding:16px}
 
-.card{
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-  box-shadow:var(--shadow);
-  padding:16px;
-}
-
-/* CLAN HEADER */
-.clanHeader{
-  display:flex;
-  gap:14px;
-  align-items:center;
-  margin-bottom:10px;
-}
+/* CLANS */
+.clanHeader{display:flex;gap:14px;align-items:center;margin-bottom:10px}
 .clanLogo{
-  width:64px;
-  height:64px;
-  border-radius:16px;
+  width:64px;height:64px;border-radius:16px;
   border:1px solid var(--line);
-  background:rgba(0,0,0,.35);
+  background:rgba(0,0,0,.4);
   overflow:hidden;
 }
-.clanLogo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+.clanLogo img{width:100%;height:100%;object-fit:cover}
+.rank{font-weight:900;margin-top:4px}
 
-.rank{
-  font-weight:900;
-  margin-top:4px;
-}
-
-.list{
-  margin-top:12px;
-  padding:0;
-  list-style:none;
-}
+.list{margin-top:12px;padding:0;list-style:none}
 .list li{
   padding:10px;
   border:1px solid var(--line);
   border-radius:14px;
-  background:rgba(0,0,0,.25);
+  background:rgba(0,0,0,.45);
   margin-bottom:8px;
 }
 
-/* FOOTER */
+/* TRANSPARENT FOOTER */
 .footer{
-  margin-top:18px;
-  padding:14px;
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  background:rgba(0,0,0,.25);
-  font-size:13px;
+  margin-top:28px;
+  padding:26px 20px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.25);
+  background:transparent;
+  text-align:center;
 }
+.footer .main{
+  font-size:24px;
+  font-weight:1000;
+  text-shadow:0 0 25px rgba(0,0,0,.9);
+}
+.footer .support{
+  margin-top:14px;
+  font-size:19px;
+  font-weight:900;
+  color:#FFD166;
+  text-shadow:0 0 20px rgba(0,0,0,1);
+}
+.footer .support span{color:#7CFFF4}
 </style>
 </head>
 
 <body>
+
+<div class="bg"></div>
+
 <div class="wrap">
 
 <header>
@@ -167,79 +148,60 @@ p{
   </h1>
   <p>
     Competitive PS99 clans with <b>TONS of giveaways</b>, events, and active Discord.
-    Join if you meet the requirements.
   </p>
 
+  <!-- ONLY THIS BUTTON EXISTS -->
   <div class="cta">
-    <a class="btn" href="https://discord.gg/7ZaWwJKFsz" target="_blank">🚀 Join Discord</a>
-    <a class="btn secondary">📩 Make a ticket after joining.</a>
+    <a class="btn" href="https://discord.gg/7ZaWwJKFsz" target="_blank">
+      🚀 Join Discord
+    </a>
   </div>
 
   <div class="strip">
     <h2>🎁 GIVEAWAYS & EVENTS</h2>
-    <p>
-      Huge giveaways, gems, huges, item drops, clan battle rewards,
-      AFK rewards and surprise events during updates.
-      <br><b>More activity = more rewards.</b>
-    </p>
+    <p>Huge giveaways, gems, huges, item drops, clan battle rewards and AFK rewards.</p>
   </div>
 </header>
 
 <section class="grid">
 
-  <!-- KOHV -->
-  <div class="card">
-    <div class="clanHeader">
-      <div class="clanLogo">
-        <img src="https://cdn.discordapp.com/emojis/1454254211461021756.webp?size=96" alt="KOHV">
-      </div>
-      <div>
-        <h2>KOHV</h2>
-        <div class="rank">🏆 Global Rank #9</div>
-      </div>
-    </div>
-
-    <ul class="list">
-      <li>🖥️ 24/7 AFK</li>
-      <li>🎟️ Rank 20+</li>
-      <li>🚗 15+ RB / Shiny Huges</li>
-      <li>💎 Able to spend 5B+ per battle</li>
-      <li>🏆 Maxed important Masteries</li>
-      <li>🧩 Luck, Extra Hatches & Enchant Slots</li>
-      <li>💰 20B+ Value</li>
-      <li>📜 Good battle history</li>
-      <li>👍 Active on Discord</li>
-    </ul>
+<div class="card">
+  <div class="clanHeader">
+    <div class="clanLogo"><img src="https://cdn.discordapp.com/emojis/1454254211461021756.webp?size=96"></div>
+    <div><h2>KOHV</h2><div class="rank">🏆 Global Rank #9</div></div>
   </div>
+  <ul class="list">
+    <li>🖥️ 24/7 AFK</li><li>🎟️ Rank 20+</li><li>🚗 15+ RB / Shiny Huges</li>
+    <li>💎 Able to spend 5B+ per battle</li><li>🏆 Maxed important Masteries</li>
+    <li>🧩 Luck, Extra Hatches & Enchant Slots</li><li>💰 20B+ Value</li>
+    <li>📜 Good battle history</li><li>👍 Active on Discord</li>
+  </ul>
+</div>
 
-  <!-- DEWP -->
-  <div class="card">
-    <div class="clanHeader">
-      <div class="clanLogo">
-        <img src="https://th.bing.com/th/id/OIP.A9hu4BkX7mrthU8IIlMSxwAAAA?w=175&h=176&c=7&r=0&o=7&pid=1.7&rm=3" alt="DEWP">
-      </div>
-      <div>
-        <h2>DEWP</h2>
-        <div class="rank">📈 Global Rank #58</div>
-      </div>
-    </div>
-
-    <ul class="list">
-      <li>🖥️ 16+ Hours AFK</li>
-      <li>🎟️ Rank 15+</li>
-      <li>🚗 40+ Huges</li>
-      <li>💎 Able to spend 250M+ per battle</li>
-      <li>🏆 80+ Important Masteries</li>
-      <li>💰 2.5B+ Value</li>
-      <li>👍 Active on Discord</li>
-    </ul>
+<div class="card">
+  <div class="clanHeader">
+    <div class="clanLogo"><img src="https://th.bing.com/th/id/OIP.A9hu4BkX7mrthU8IIlMSxwAAAA?w=175"></div>
+    <div><h2>DEWP</h2><div class="rank">📈 Global Rank #58</div></div>
   </div>
+  <ul class="list">
+    <li>🖥️ 16+ Hours AFK</li><li>🎟️ Rank 15+</li><li>🚗 40+ Huges</li>
+    <li>💎 Able to spend 250M+ per battle</li>
+    <li>🏆 80+ Important Masteries</li><li>💰 2.5B+ Value</li>
+    <li>👍 Active on Discord</li>
+  </ul>
+</div>
 
 </section>
 
 <div class="footer">
-  ⛔ Inactive on Discord or not replying to DMs = <b>KICK</b><br>
-  ➕ Alt accounts allowed
+  <div class="main">
+    ⛔ Inactive on Discord or not replying to DMs = <b>KICK</b><br>
+    ➕ Alt accounts allowed
+  </div>
+  <div class="support">
+    If you’re facing problems, DM:
+    <span>iidxpelord</span> • <span>BammieWass07</span>
+  </div>
 </div>
 
 </div>
