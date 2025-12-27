@@ -11,7 +11,6 @@
   --muted:#A9B3D8;
   --muted2:#8C97C6;
   --line:rgba(255,255,255,.16);
-  --line2:rgba(255,255,255,.10);
 
   --kohv:#7C4DFF;
   --dewp:#34D399;
@@ -19,19 +18,12 @@
 
   --warn:#FFD166;
   --good:#7CFFF4;
-  --bad:#ff4d6d;
 
   --radius:28px;
-  --radius2:18px;
-
   --shadow:0 26px 95px rgba(0,0,0,.72);
   --shadow2:0 18px 55px rgba(0,0,0,.55);
   --shadow3:0 10px 30px rgba(0,0,0,.55);
-
   --ease:cubic-bezier(.2,.9,.2,1);
-
-  --glass:rgba(0,0,0,.26);
-  --glass2:rgba(0,0,0,.14);
 }
 
 *{box-sizing:border-box}
@@ -53,23 +45,23 @@ body{
   background:
     radial-gradient(950px 650px at 16% 10%, rgba(124,77,255,.30), transparent 58%),
     radial-gradient(950px 650px at 84% 12%, rgba(52,211,153,.22), transparent 60%),
-    linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.82));
+    linear-gradient(rgba(0,0,0,.20), rgba(0,0,0,.86));
 }
 
 .noise{
   position:fixed; inset:0; z-index:-7; pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
   mix-blend-mode:overlay;
-  opacity:.40;
+  opacity:.35;
 }
 
 .sweep{
   position:fixed; inset:-40%; z-index:-6; pointer-events:none;
-  background:linear-gradient(110deg, transparent 35%, rgba(255,255,255,.09), transparent 65%);
+  background:linear-gradient(110deg, transparent 35%, rgba(255,255,255,.08), transparent 65%);
   transform:translateX(-40%) rotate(12deg);
   animation:sweep 10.5s linear infinite;
   mix-blend-mode:overlay;
-  opacity:.50;
+  opacity:.45;
 }
 @keyframes sweep{
   0%{transform:translateX(-40%) rotate(12deg)}
@@ -126,20 +118,8 @@ body{
   transition:background .16s var(--ease), border-color .16s var(--ease), color .16s var(--ease);
 }
 .navLinks a:hover{color:rgba(255,255,255,.92);background:rgba(0,0,0,.24);border-color:rgba(255,255,255,.12)}
-.navRight{display:flex;align-items:center;gap:8px}
 
-.iconBtn{
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.24);
-  color:var(--text);
-  border-radius:999px;
-  padding:9px 10px;
-  cursor:pointer;
-  font-weight:1300;
-  transition:transform .15s var(--ease), filter .15s var(--ease);
-}
-.iconBtn:hover{transform:translateY(-1px);filter:brightness(1.06)}
-.iconBtn:active{transform:translateY(0);filter:brightness(.98)}
+.navRight{display:flex;align-items:center;gap:8px}
 
 /* Hero */
 .hero{margin-top:14px}
@@ -157,8 +137,6 @@ h1{
 }
 .kohvTxt{color:var(--kohv);font-weight:1300}
 .dewpTxt{color:var(--dewp);font-weight:1300}
-
-.heroTop{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
 
 /* Stats row */
 .stats{
@@ -202,59 +180,6 @@ h1{
   background:rgba(0,0,0,.22);
   padding:10px 12px;
   border-radius:16px;
-}
-
-/* Control bar (tabs + search) */
-.controls{
-  margin-top:18px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:space-between;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.22);
-  border-radius:20px;
-  padding:12px 12px;
-}
-.tabs{display:flex;gap:8px;flex-wrap:wrap}
-.tab{
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.22);
-  color:var(--muted);
-  padding:9px 12px;
-  border-radius:999px;
-  font-weight:1300;
-  cursor:pointer;
-  transition:filter .15s var(--ease), transform .15s var(--ease);
-}
-.tab:hover{filter:brightness(1.08);transform:translateY(-1px)}
-.tab.active{color:#fff;border-color:rgba(255,255,255,.24)}
-.tab.kohv.active{background:rgba(124,77,255,.18)}
-.tab.dewp.active{background:rgba(52,211,153,.16)}
-.tab.all.active{background:rgba(88,101,242,.16)}
-
-.searchWrap{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.search{
-  width:min(360px, 90vw);
-  padding:11px 12px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.26);
-  color:var(--text);
-  outline:none;
-  font-weight:1200;
-}
-.search::placeholder{color:rgba(169,179,216,.75)}
-.toggleRow{display:flex;gap:8px;flex-wrap:wrap}
-.pillBtn{
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.22);
-  color:var(--muted);
-  padding:10px 12px;
-  border-radius:999px;
-  cursor:pointer;
-  font-weight:1300;
 }
 
 /* Banner */
@@ -320,15 +245,10 @@ h1{
 
 .divider{height:1px;background:rgba(255,255,255,.10);margin:14px 0 0}
 
-.req{
-  margin-top:16px;
-  display:grid;
-  gap:10px;
-}
+.req{margin-top:16px;display:grid;gap:10px}
 .reqItem{
   display:flex;align-items:flex-start;gap:12px;
-  padding:12px 12px;
-  border-radius:18px;
+  padding:12px 12px;border-radius:18px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(0,0,0,.22);
 }
@@ -337,8 +257,7 @@ h1{
   display:grid;place-items:center;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.08);
-  flex:0 0 30px;
-  font-size:16px;
+  flex:0 0 30px;font-size:16px;
 }
 .reqText{line-height:1.35}
 .reqText b{color:rgba(255,255,255,.96)}
@@ -413,19 +332,6 @@ h1{
   text-shadow:0 0 24px rgba(0,0,0,1);
 }
 .footer .support span{color:var(--good)}
-.footerBtns{
-  margin-top:14px;
-  display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
-}
-.footerBtns button{
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.22);
-  color:var(--text);
-  padding:10px 12px;
-  border-radius:999px;
-  cursor:pointer;
-  font-weight:1300;
-}
 
 /* Reveal */
 .reveal{opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease), transform .5s var(--ease)}
@@ -445,35 +351,6 @@ h1{
 }
 .toTop:hover{filter:brightness(1.08)}
 
-/* Toast */
-.toast{
-  position:fixed;
-  bottom:18px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:999;
-  border:1px solid rgba(255,255,255,.16);
-  background:rgba(0,0,0,.55);
-  backdrop-filter: blur(14px);
-  box-shadow:var(--shadow2);
-  border-radius:18px;
-  padding:12px 14px;
-  max-width:92vw;
-  display:none;
-  gap:10px;
-  align-items:center;
-  font-weight:1200;
-}
-.toast b{color:rgba(255,255,255,.95)}
-.toast small{color:var(--muted);font-weight:1000}
-
-/* Reduced motion */
-.reduce *{
-  animation:none !important;
-  transition:none !important;
-  scroll-behavior:auto !important;
-}
-
 @media(max-width:560px){
   .heroInner{padding:22px 16px}
   .clanCard{padding:16px}
@@ -482,7 +359,6 @@ h1{
   .btn{width:100%}
   .smallNote{width:100%;text-align:center}
   .navLinks{display:none}
-  .controls{justify-content:center}
 }
 </style>
 </head>
@@ -503,14 +379,14 @@ h1{
 
       <div class="navLinks">
         <a href="#clans">Clans</a>
-        <a href="#how">How</a>
+        <a href="#how">How to Join</a>
         <a href="#faq">FAQ</a>
         <a href="#support">Support</a>
       </div>
 
+      <!-- ✅ removed copy buttons, kept one clean Apply button -->
       <div class="navRight">
-        <button class="iconBtn" id="copyInvite" title="Copy Discord Invite">📋 Invite</button>
-        <button class="iconBtn" id="openDiscord" title="Open Discord">💬</button>
+        <a class="btn" style="padding:10px 14px;border-radius:999px" href="https://discord.gg/7WYcRBDGUf" target="_blank" rel="noreferrer">🚀 Apply</a>
       </div>
     </div>
   </div>
@@ -518,79 +394,47 @@ h1{
   <!-- HERO -->
   <section class="card hero reveal" id="top">
     <div class="heroInner">
-      <div class="heroTop">
-        <div>
-          <h1>
-            PS99 Recruiting —
-            <span class="kohvTxt">KOHV</span> (#9) &
-            <span class="dewpTxt">DEWP</span> (#58)
-          </h1>
-          <div class="sub">
-            Competitive PS99 clans with <span class="inlineGlow"><b>TONS of giveaways</b></span>, events, and a super active Discord.
-            Join if you meet requirements.
-          </div>
+      <h1>
+        PS99 Recruiting —
+        <span class="kohvTxt">KOHV</span> (#9) &
+        <span class="dewpTxt">DEWP</span> (#58)
+      </h1>
+      <div class="sub">
+        Competitive PS99 clans with <span class="inlineGlow"><b>TONS of giveaways</b></span>, events, and an active Discord.
+        <br><b>Requirements are flexible</b> — apply even if you’re missing some.
+      </div>
 
-          <div class="stats">
-            <div class="statCard">
-              <div class="statTop"><div class="statLabel">KOHV Rank</div><div class="statNum" data-count="9">0</div></div>
-              <div class="statHint">Top clan (hard reqs)</div>
-            </div>
-            <div class="statCard">
-              <div class="statTop"><div class="statLabel">DEWP Rank</div><div class="statNum" data-count="58">0</div></div>
-              <div class="statHint">Second clan (still competitive)</div>
-            </div>
-            <div class="statCard">
-              <div class="statTop"><div class="statLabel">Giveaways</div><div class="statNum" data-count="999+">0</div></div>
-              <div class="statHint">Tons of events + rewards</div>
-            </div>
-            <div class="statCard">
-              <div class="statTop"><div class="statLabel">Support</div><div class="statNum" data-count="2">0</div></div>
-              <div class="statHint">DM helpers if stuck</div>
-            </div>
-          </div>
-
-          <div class="chips">
-            <div class="chip">🎁 Giveaways</div>
-            <div class="chip">⚔️ Clan Battles</div>
-            <div class="chip">🌙 AFK Rewards</div>
-            <div class="chip">✅ Fast Tickets</div>
-            <div class="chip">🧠 Mastery Focus</div>
-          </div>
-
-          <div class="cta">
-            <a class="btn" href="https://discord.gg/7ZaWwJKFsz" target="_blank" rel="noreferrer">
-              🚀 Join Discord
-            </a>
-            <a class="btn secondary" href="#how">🧾 How to Join</a>
-            <div class="smallNote">
-              📩 If you’re facing problems, DM <b>iidxpelord</b> or <b>BammieWass07</b>
-            </div>
-          </div>
-
-          <div class="controls">
-            <div class="tabs">
-              <button class="tab all active" data-show="all">Show All</button>
-              <button class="tab kohv" data-show="KOHV">KOHV</button>
-              <button class="tab dewp" data-show="DEWP">DEWP</button>
-            </div>
-
-            <div class="searchWrap">
-              <input class="search" id="search" placeholder="Search requirements (ex: AFK, Rank, Value, Mastery)" />
-              <div class="toggleRow">
-                <button class="pillBtn" id="toggleMotion">🌀 Reduce motion</button>
-              </div>
-            </div>
-          </div>
-
+      <div class="stats">
+        <div class="statCard">
+          <div class="statTop"><div class="statLabel">KOHV Rank</div><div class="statNum">#9</div></div>
+          <div class="statHint">Main clan</div>
         </div>
+        <div class="statCard">
+          <div class="statTop"><div class="statLabel">DEWP Rank</div><div class="statNum">#58</div></div>
+          <div class="statHint">Secondary clan</div>
+        </div>
+        <div class="statCard">
+          <div class="statTop"><div class="statLabel">Giveaways</div><div class="statNum">Often</div></div>
+          <div class="statHint">Gems • Huges • Events</div>
+        </div>
+        <div class="statCard">
+          <div class="statTop"><div class="statLabel">Apply</div><div class="statNum">Direct</div></div>
+          <div class="statHint">Invite opens clan-apply</div>
+        </div>
+      </div>
+
+      <div class="cta">
+        <a class="btn" href="https://discord.gg/7WYcRBDGUf" target="_blank" rel="noreferrer">🚀 Apply in Discord</a>
+        <a class="btn secondary" href="#how">🧾 How to Join</a>
+        <div class="smallNote">📩 If you’re facing problems, DM <b>iidxpelord</b> or <b>BammieWass07</b></div>
       </div>
 
       <div class="banner">
         <div class="bannerLeft">
           <h2>🎁 GIVEAWAYS & EVENTS</h2>
           <p>
-            Gems, huges, item drops, clan battle rewards, AFK rewards + surprise events during updates.
-            <br><b style="color:rgba(255,255,255,.92)">More activity = more rewards.</b>
+            Multiple giveaways, gems, huges, item drops, clan battle rewards + surprise events during updates.
+            <br><b style="color:rgba(255,255,255,.92)">Be active + responsive = faster accept.</b>
           </p>
         </div>
         <div class="bannerRight">
@@ -607,13 +451,13 @@ h1{
   <div class="sectionTitle reveal" id="clans">
     <div>
       <h2>Clan Requirements</h2>
-      <p>Use tabs + search to filter. Be responsive on Discord.</p>
+      <p>If you don’t meet KOHV, apply to DEWP.</p>
     </div>
   </div>
 
   <section class="grid">
     <!-- KOHV -->
-    <article class="card clanCard reveal" data-clan="KOHV">
+    <article class="card clanCard reveal">
       <div class="clanTop">
         <div class="leftHead">
           <div class="logo">
@@ -630,47 +474,20 @@ h1{
       <div class="divider"></div>
 
       <div class="req">
-        <div class="reqItem" data-key="24/7 afk">
-          <div class="reqIcon">🖥️</div>
-          <div class="reqText"><b>24/7 AFK</b> required</div>
-        </div>
-        <div class="reqItem" data-key="rank 20">
-          <div class="reqIcon">🎟️</div>
-          <div class="reqText"><b>Rank 20+</b></div>
-        </div>
-        <div class="reqItem" data-key="15 rb shiny huges">
-          <div class="reqIcon">🚗</div>
-          <div class="reqText"><b>15+ RB / Shiny Huges</b></div>
-        </div>
-        <div class="reqItem" data-key="spend 5b battle">
-          <div class="reqIcon">💎</div>
-          <div class="reqText"><b>Able to spend 5B+</b> each battle if required</div>
-        </div>
-        <div class="reqItem" data-key="maxed masteries">
-          <div class="reqIcon">🏆</div>
-          <div class="reqText"><b>Maxed</b> important Masteries</div>
-        </div>
-        <div class="reqItem" data-key="gamepasses luck extra hatches extra enchant">
-          <div class="reqIcon">🧩</div>
-          <div class="reqText"><b>Gamepasses:</b> Luck, Extra Hatches & Extra Enchant Slots</div>
-        </div>
-        <div class="reqItem" data-key="20b value">
-          <div class="reqIcon">💰</div>
-          <div class="reqText"><b>20B+</b> Value</div>
-        </div>
-        <div class="reqItem" data-key="good clan battle history">
-          <div class="reqIcon">📜</div>
-          <div class="reqText"><b>Good</b> clan battle history</div>
-        </div>
-        <div class="reqItem" data-key="active discord">
-          <div class="reqIcon">👍</div>
-          <div class="reqText"><b>Active</b> on Discord</div>
-        </div>
+        <div class="reqItem"><div class="reqIcon">🖥️</div><div class="reqText"><b>24/7 AFK</b> required</div></div>
+        <div class="reqItem"><div class="reqIcon">🎟️</div><div class="reqText"><b>Rank 20+</b></div></div>
+        <div class="reqItem"><div class="reqIcon">🚗</div><div class="reqText"><b>15+ RB / Shiny Huges</b></div></div>
+        <div class="reqItem"><div class="reqIcon">💎</div><div class="reqText"><b>Able to spend 5B+</b> each battle if required</div></div>
+        <div class="reqItem"><div class="reqIcon">🏆</div><div class="reqText"><b>Maxed</b> important Masteries</div></div>
+        <div class="reqItem"><div class="reqIcon">🧩</div><div class="reqText"><b>Gamepasses:</b> Luck, Extra Hatches & Extra Enchant Slots</div></div>
+        <div class="reqItem"><div class="reqIcon">💰</div><div class="reqText"><b>20B+</b> Value</div></div>
+        <div class="reqItem"><div class="reqIcon">📜</div><div class="reqText"><b>Good</b> clan battle history</div></div>
+        <div class="reqItem"><div class="reqIcon">👍</div><div class="reqText"><b>Active</b> on Discord</div></div>
       </div>
     </article>
 
     <!-- DEWP -->
-    <article class="card clanCard reveal" data-clan="DEWP">
+    <article class="card clanCard reveal">
       <div class="clanTop">
         <div class="leftHead">
           <div class="logo">
@@ -687,38 +504,13 @@ h1{
       <div class="divider"></div>
 
       <div class="req">
-        <div class="reqItem" data-key="16 hours afk">
-          <div class="reqIcon">🖥️</div>
-          <div class="reqText"><b>16+ Hours AFK</b></div>
-        </div>
-        <div class="reqItem" data-key="rank 15">
-          <div class="reqIcon">🎟️</div>
-          <div class="reqText"><b>Rank 15+</b></div>
-        </div>
-        <div class="reqItem" data-key="40 huges">
-          <div class="reqIcon">🚗</div>
-          <div class="reqText"><b>40+ Huges</b></div>
-        </div>
-        <div class="reqItem" data-key="spend 250m battle">
-          <div class="reqIcon">💎</div>
-          <div class="reqText"><b>Able to spend 250M+</b> each battle if required</div>
-        </div>
-        <div class="reqItem" data-key="80 masteries">
-          <div class="reqIcon">🏆</div>
-          <div class="reqText"><b>80+</b> on Important Masteries</div>
-        </div>
-        <div class="reqItem" data-key="2.5b value">
-          <div class="reqIcon">💰</div>
-          <div class="reqText"><b>2.5B+</b> Value</div>
-        </div>
-        <div class="reqItem" data-key="active discord">
-          <div class="reqIcon">👍</div>
-          <div class="reqText"><b>Active</b> on Discord</div>
-        </div>
-        <div class="reqItem" data-key="alt accounts">
-          <div class="reqIcon">➕</div>
-          <div class="reqText"><b>Alt accounts</b> allowed</div>
-        </div>
+        <div class="reqItem"><div class="reqIcon">🖥️</div><div class="reqText"><b>16+ Hours AFK</b></div></div>
+        <div class="reqItem"><div class="reqIcon">🎟️</div><div class="reqText"><b>Rank 15+</b></div></div>
+        <div class="reqItem"><div class="reqIcon">🚗</div><div class="reqText"><b>40+ Huges</b></div></div>
+        <div class="reqItem"><div class="reqIcon">💎</div><div class="reqText"><b>Able to spend 250M+</b> each battle if required</div></div>
+        <div class="reqItem"><div class="reqIcon">🏆</div><div class="reqText"><b>80+</b> on Important Masteries</div></div>
+        <div class="reqItem"><div class="reqIcon">💰</div><div class="reqText"><b>2.5B+</b> Value</div></div>
+        <div class="reqItem"><div class="reqIcon">👍</div><div class="reqText"><b>Active</b> on Discord</div></div>
       </div>
     </article>
   </section>
@@ -727,66 +519,62 @@ h1{
   <div class="sectionTitle reveal" id="how">
     <div>
       <h2>How to Join</h2>
-      <p>Fast process — just don’t ghost DMs.</p>
+      <p>Follow these steps and send the requested screenshots.</p>
     </div>
   </div>
 
   <section class="columns">
     <div class="card panel reveal">
-      <h3>🧾 Join Steps</h3>
-      <p>Follow these and you’ll be handled fast.</p>
+      <h3>🧾 How to Join</h3>
+      <p>Do this and you’ll be handled fast.</p>
 
       <div class="steps">
         <div class="step">
           <div class="stepNum">1</div>
-          <div class="stepText"><b>Join the Discord</b><br>Open the server invite and verify if needed.</div>
+          <div class="stepText"><b>Join the discord</b><br>Use the invite link to open the server.</div>
         </div>
         <div class="step">
           <div class="stepNum">2</div>
-          <div class="stepText"><b>Create a ticket / apply</b><br>Say which clan (KOHV/DEWP) and drop your stats.</div>
+          <div class="stepText"><b>Create a ticket in clan apply</b><br>Select whichever clan you are applying for.</div>
         </div>
         <div class="step">
           <div class="stepNum">3</div>
-          <div class="stepText"><b>Be responsive</b><br>Inactive on Discord or not replying to DMs = kicked.</div>
+          <div class="stepText"><b>Send screenshots of the details asked for</b><br>Masteries, Enchants, Gamepasses and Pets.</div>
         </div>
         <div class="step">
           <div class="stepNum">4</div>
-          <div class="stepText"><b>AFK + participate</b><br>More activity = more rewards.</div>
+          <div class="stepText"><b>Be responsive and active</b><br>Don’t ignore DMs.</div>
         </div>
+      </div>
+
+      <div style="margin-top:12px;color:var(--muted);line-height:1.55">
+        📩 If you’re facing problems, DM <b>iidxpelord</b> or <b>BammieWass07</b>
       </div>
     </div>
 
     <div class="card panel reveal" id="faq">
       <h3>❓ FAQ</h3>
-      <p>Quick answers so you don’t get stuck.</p>
+      <p>New rules and answers.</p>
 
       <div class="faq">
         <div class="qa">
-          <button class="q" type="button">
-            <span>Do I have to be active on Discord?</span><div class="chev">⌄</div>
-          </button>
-          <div class="a"><div class="aInner">Yes. If you’re inactive on Discord or don’t reply to DMs, you will be kicked.</div></div>
+          <button class="q" type="button"><span>Is there a gem donation requirements?</span><div class="chev">⌄</div></button>
+          <div class="a"><div class="aInner">No, you do not have to donate gems to the clan unless you wish to.</div></div>
         </div>
 
         <div class="qa">
-          <button class="q" type="button">
-            <span>Can I apply to DEWP if I don’t meet KOHV?</span><div class="chev">⌄</div>
-          </button>
-          <div class="a"><div class="aInner">Yep. DEWP is still competitive and perfect to grow into KOHV.</div></div>
+          <button class="q" type="button"><span>Are alt accounts allowed?</span><div class="chev">⌄</div></button>
+          <div class="a"><div class="aInner">No we do not allow alt accounts to join the clan.</div></div>
         </div>
 
         <div class="qa">
-          <button class="q" type="button">
-            <span>Are alt accounts allowed?</span><div class="chev">⌄</div>
-          </button>
-          <div class="a"><div class="aInner">Yes, alt accounts are allowed.</div></div>
+          <button class="q" type="button"><span>What if I don't meet the requirements?</span><div class="chev">⌄</div></button>
+          <div class="a"><div class="aInner">You can join our secondary clan called <b>DEWP</b>.</div></div>
         </div>
 
         <div class="qa">
-          <button class="q" type="button">
-            <span>What if I’m having problems joining?</span><div class="chev">⌄</div>
-          </button>
-          <div class="a"><div class="aInner">DM <b>iidxpelord</b> or <b>BammieWass07</b> and you’ll get help.</div></div>
+          <button class="q" type="button"><span>Can some exceptions be made?</span><div class="chev">⌄</div></button>
+          <div class="a"><div class="aInner">Yes our requirements are flexible so feel free to apply even if you are missing some requirements.</div></div>
         </div>
       </div>
     </div>
@@ -795,63 +583,22 @@ h1{
   <!-- FOOTER -->
   <div class="footer reveal" id="support">
     <div class="main">
-      ⛔ Inactive on Discord or not replying to DMs = <b>KICK</b><br>
-      ➕ Alt accounts allowed
+      ⛔ Inactive on Discord & not replying to DM’s will be <b>KICKED</b>
     </div>
     <div class="support">
       If you’re facing problems, DM:
-      <span id="dm1">iidxpelord</span> • <span id="dm2">BammieWass07</span>
+      <span>iidxpelord</span> • <span>BammieWass07</span>
     </div>
 
-    <div class="footerBtns">
-      <button id="copyDM1">📋 Copy iidxpelord</button>
-      <button id="copyDM2">📋 Copy BammieWass07</button>
-      <button id="copyInvite2">📋 Copy Invite</button>
+    <div style="margin-top:14px;display:flex;justify-content:center">
+      <a class="btn" href="https://discord.gg/7WYcRBDGUf" target="_blank" rel="noreferrer">🚀 Apply in Discord</a>
     </div>
   </div>
 </div>
 
 <button class="toTop" id="toTop" title="Back to top">↑</button>
 
-<div class="toast" id="toast" role="status" aria-live="polite">
-  <div>✅ <b>Copied!</b> <small id="toastMsg">Done</small></div>
-</div>
-
 <script>
-const INVITE = "https://discord.gg/7ZaWwJKFsz";
-
-function toast(msg){
-  const t = document.getElementById("toast");
-  const m = document.getElementById("toastMsg");
-  m.textContent = msg;
-  t.style.display = "flex";
-  clearTimeout(window.__toastTimer);
-  window.__toastTimer = setTimeout(()=>{ t.style.display="none"; }, 1600);
-}
-
-async function copyText(text, msg){
-  try{
-    await navigator.clipboard.writeText(text);
-    toast(msg || "Copied");
-  }catch(e){
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    document.body.removeChild(ta);
-    toast(msg || "Copied");
-  }
-}
-
-/* Buttons */
-document.getElementById("copyInvite").onclick = ()=> copyText(INVITE, "Discord invite copied");
-document.getElementById("copyInvite2").onclick = ()=> copyText(INVITE, "Discord invite copied");
-document.getElementById("openDiscord").onclick = ()=> window.open(INVITE, "_blank");
-
-document.getElementById("copyDM1").onclick = ()=> copyText("iidxpelord", "Copied iidxpelord");
-document.getElementById("copyDM2").onclick = ()=> copyText("BammieWass07", "Copied BammieWass07");
-
 /* Accordion */
 document.querySelectorAll(".qa").forEach((box)=>{
   const btn = box.querySelector(".q");
@@ -868,15 +615,6 @@ document.querySelectorAll(".qa").forEach((box)=>{
     }
   });
 });
-
-/* Reveal on scroll */
-const revealEls = Array.from(document.querySelectorAll(".reveal"));
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting) e.target.classList.add("on");
-  });
-},{ threshold:.12 });
-revealEls.forEach(el=>io.observe(el));
 
 /* Back to top */
 const toTop = document.getElementById("toTop");
@@ -896,63 +634,14 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 
-/* Animated counters */
-function animateCounters(){
-  document.querySelectorAll("[data-count]").forEach(el=>{
-    const target = Number(el.getAttribute("data-count") || "0");
-    const start = 0;
-    const duration = 800;
-    const t0 = performance.now();
-    function tick(now){
-      const p = Math.min(1, (now - t0) / duration);
-      const val = Math.floor(start + (target - start) * (1 - Math.pow(1-p, 3)));
-      el.textContent = val;
-      if(p < 1) requestAnimationFrame(tick);
-      else el.textContent = target;
-    }
-    requestAnimationFrame(tick);
+/* Reveal on scroll */
+const revealEls = Array.from(document.querySelectorAll(".reveal"));
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("on");
   });
-}
-setTimeout(animateCounters, 250);
-
-/* Tabs + search filter */
-let activeClan = "all";
-const tabs = document.querySelectorAll(".tab");
-const search = document.getElementById("search");
-const clanCards = document.querySelectorAll(".clanCard");
-
-tabs.forEach(t=>{
-  t.addEventListener("click", ()=>{
-    tabs.forEach(x=>x.classList.remove("active"));
-    t.classList.add("active");
-    activeClan = t.dataset.show;
-    applyFilter();
-  });
-});
-
-function applyFilter(){
-  const q = (search.value || "").trim().toLowerCase();
-
-  clanCards.forEach(card=>{
-    const clan = card.dataset.clan;
-    const clanOk = (activeClan === "all") || (clan === activeClan);
-    card.style.display = clanOk ? "" : "none";
-
-    // requirements filter
-    card.querySelectorAll(".reqItem").forEach(item=>{
-      const key = (item.dataset.key || item.textContent || "").toLowerCase();
-      item.style.display = (!q || key.includes(q)) ? "" : "none";
-    });
-  });
-}
-search.addEventListener("input", applyFilter);
-
-/* Reduce motion toggle */
-const toggleMotion = document.getElementById("toggleMotion");
-toggleMotion.addEventListener("click", ()=>{
-  document.body.classList.toggle("reduce");
-  toast(document.body.classList.contains("reduce") ? "Reduced motion ON" : "Reduced motion OFF");
-});
+},{ threshold:.12 });
+revealEls.forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
