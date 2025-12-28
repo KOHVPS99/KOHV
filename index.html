@@ -6,205 +6,729 @@
 <title>KOHV & DEWP CLAN — PS99 Recruiting</title>
 
 <style>
+/* ============ RESET ============ */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color:#EEF2FF;
   background:#050714;
   overflow-x:hidden;
 }
-a{color:inherit;text-decoration:none}
+a{color:inherit}
+button{font:inherit}
 
-/* THEME */
+/* ============ THEME ============ */
 :root{
   --kohv:#8B5CFF;
   --dewp:#33E6A6;
+  --discord:#5865F2;
+
+  --text:#EEF2FF;
   --muted:#B6C0EA;
+  --muted2:#92A0D8;
+
+  --glass:rgba(0,0,0,.38);
+  --glass2:rgba(0,0,0,.26);
+
   --line:rgba(255,255,255,.14);
-  --shadow:0 24px 70px rgba(0,0,0,.7);
+  --line2:rgba(255,255,255,.10);
+
+  --r:24px;
+  --r2:18px;
+
+  --shadow:0 26px 90px rgba(0,0,0,.78);
+  --shadow2:0 16px 48px rgba(0,0,0,.58);
+
+  --ease:cubic-bezier(.2,.9,.2,1);
 }
 
-/* BACKGROUND */
+/* ============ BACKGROUND (YOUR GIF) ============ */
 .bg{
   position:fixed; inset:0; z-index:-10;
-  background:url("https://media.discordapp.net/attachments/1385938698356392077/1454271317955186931/IMG_2396.gif") center/cover no-repeat;
+  background:url("https://media.discordapp.net/attachments/1385938698356392077/1454271317955186931/IMG_2396.gif?ex=69507b35&is=694f29b5&hm=408e10e8d1f932f3af215d348e36c7d0f41775be3150bc7f6ef11739a5a1eac0&=") center/cover no-repeat;
 }
 .bg::after{
   content:""; position:absolute; inset:0;
-  background:linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.9));
+  background:
+    radial-gradient(1000px 650px at 16% 10%, rgba(139,92,255,.34), transparent 60%),
+    radial-gradient(1000px 650px at 84% 12%, rgba(51,230,166,.22), transparent 62%),
+    linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.90));
 }
 
-/* LAYOUT */
-.wrap{max-width:1160px;margin:auto;padding:18px 16px 120px}
+/* noise */
+.noise{
+  position:fixed; inset:0; z-index:-9; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+  opacity:.32;
+}
 
-/* GLASS */
+/* ============ LAYOUT ============ */
+.wrap{
+  max-width:1160px;
+  margin:0 auto;
+  padding:18px 16px 120px;
+}
+
 .glass{
   border:1px solid var(--line);
-  background:rgba(0,0,0,.35);
-  backdrop-filter:blur(16px);
-  border-radius:26px;
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,.18));
+  backdrop-filter: blur(16px);
   box-shadow:var(--shadow);
-  padding:22px;
+  border-radius:calc(var(--r) + 10px);
+  position:relative;
+  overflow:hidden;
+}
+.glass::before{
+  content:"";
+  position:absolute; inset:-2px; pointer-events:none;
+  background:
+    radial-gradient(680px 380px at 16% 0%, rgba(139,92,255,.22), transparent 62%),
+    radial-gradient(680px 380px at 84% 0%, rgba(51,230,166,.16), transparent 62%);
+  opacity:.9;
+}
+.glass > *{position:relative}
+
+/* ============ TOP BAR ============ */
+.topbar{
+  position:sticky; top:10px; z-index:50;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.24));
+  backdrop-filter: blur(16px);
+  box-shadow:var(--shadow2);
+  padding:10px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
 }
 
-/* TOPBAR */
-.topbar{
-  position:sticky;top:10px;z-index:50;
-  display:flex;justify-content:space-between;align-items:center;
+.brand{
+  display:flex; align-items:center; gap:10px;
+  user-select:none;
+  min-width:0;
+}
+.dot{
+  width:12px;height:12px;border-radius:999px;
+  background:conic-gradient(from 180deg, var(--kohv), var(--dewp), var(--discord), var(--kohv));
+  box-shadow:0 0 22px rgba(255,255,255,.16);
+}
+.brandText{
+  font-weight:1400;
+  letter-spacing:.35px;
+  font-size:13px;
+  opacity:.95;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.nav{
+  display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;
+}
+.nav a{
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:1200;
+  font-size:12.5px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid transparent;
+  transition:background .16s var(--ease), border-color .16s var(--ease), color .16s var(--ease);
+}
+.nav a:hover{
+  color:rgba(255,255,255,.92);
+  background:rgba(0,0,0,.30);
+  border-color:rgba(255,255,255,.12);
+}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding:14px 18px;
+  border-radius:18px;
+  font-weight:1500;
+  text-decoration:none;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.16);
+  background:
+    radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.20), transparent 55%),
+    linear-gradient(180deg, rgba(88,101,242,1), rgba(88,101,242,.72));
+  box-shadow:0 24px 70px rgba(88,101,242,.24);
+  transition:transform .16s var(--ease), filter .16s var(--ease), box-shadow .16s var(--ease);
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.07);box-shadow:0 34px 92px rgba(88,101,242,.30)}
+.btn:active{transform:translateY(0);filter:brightness(.98)}
+.btn.secondary{
+  background:rgba(0,0,0,.34);
+  box-shadow:none;
+}
+.btn.pill{
   padding:10px 14px;
   border-radius:999px;
-  background:rgba(0,0,0,.45);
-  border:1px solid var(--line);
-}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800}
-.dot{
-  width:12px;height:12px;border-radius:50%;
-  background:conic-gradient(var(--kohv),var(--dewp));
-}
-.nav{display:flex;gap:10px}
-.nav a{font-size:13px;color:var(--muted)}
-.btn{
-  padding:10px 16px;border-radius:18px;
-  background:#5865F2;color:#fff;
-  font-weight:800;
+  font-size:13px;
 }
 
-/* HERO */
+/* ============ HERO ============ */
 .hero{margin-top:14px}
+.heroInner{padding:28px 22px}
+
 .h1{
-  font-size:clamp(34px,4vw,58px);
   margin:0;
+  font-size:clamp(34px,3.9vw,58px);
+  line-height:1.02;
+  letter-spacing:.35px;
 }
-.kohv{color:var(--kohv)}
-.dewp{color:var(--dewp)}
-.sub{margin-top:12px;color:var(--muted);line-height:1.7}
+.kohv{color:var(--kohv); font-weight:1700}
+.dewp{color:var(--dewp); font-weight:1700}
 
-/* ACTIONS */
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.secondary{background:rgba(255,255,255,.08)}
+.sub{
+  margin-top:12px;
+  max-width:90ch;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.75;
+}
 
-/* PILLS */
-.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.heroGrid{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns: 1.25fr .75fr;
+  gap:14px;
+}
+@media(max-width:900px){ .heroGrid{grid-template-columns:1fr} }
+
+.quickBox{
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.22);
+  border-radius:22px;
+  padding:14px;
+}
+
+.quickTitle{
+  font-weight:1600;
+  letter-spacing:.4px;
+  margin:0;
+  font-size:14px;
+}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .pill{
-  padding:8px 12px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.26);
+  color:rgba(255,255,255,.92);
+  padding:9px 12px;
   border-radius:999px;
-  background:rgba(255,255,255,.08);
-  border:1px solid var(--line);
-  font-weight:700;
+  font-weight:1400;
+  font-size:13px;
 }
-.pill.k{color:var(--kohv)}
-.pill.d{color:var(--dewp)}
+.pill b{font-weight:1700}
+.pill.k b{color:var(--kohv)}
+.pill.d b{color:var(--dewp)}
 
-/* SECTIONS */
-.sectionHead{margin:28px 0 12px}
-.sectionHead h2{margin:0}
-.sectionHead p{margin:4px 0 0;color:var(--muted)}
+.callout{
+  margin-top:14px;
+  border:1px solid rgba(255,255,255,.16);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,.22));
+  border-radius:22px;
+  padding:14px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.callout b{color:rgba(255,255,255,.92)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 
-/* CLANS */
-.grid{display:grid;gap:16px}
-@media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
-.req{display:grid;gap:10px;margin-top:14px}
+/* ============ SECTIONS ============ */
+.sectionHead{
+  margin:24px 0 10px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.sectionHead h2{
+  margin:0;
+  font-size:18px;
+  letter-spacing:.45px;
+}
+.sectionHead p{
+  margin:0;
+  color:var(--muted);
+  font-weight:1100;
+  font-size:13px;
+}
+
+/* ============ CLAN CARDS ============ */
+.grid{
+  display:grid;
+  gap:16px;
+}
+@media(min-width:940px){ .grid{grid-template-columns:1fr 1fr} }
+
+.clanCard{
+  padding:18px;
+  border-radius:calc(var(--r) + 10px);
+}
+.clanTop{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+}
+.left{
+  display:flex; align-items:center; gap:14px;
+}
+.logo{
+  width:74px;height:74px;border-radius:22px;
+  border:1px solid rgba(255,255,255,.16);
+  overflow:hidden;
+  background:rgba(0,0,0,.22);
+  box-shadow:0 18px 48px rgba(0,0,0,.35);
+}
+.logo img{width:100%;height:100%;object-fit:cover}
+.name h3{margin:0;font-size:28px;letter-spacing:.2px}
+.rank{margin-top:6px;font-weight:1500;color:rgba(255,255,255,.92)}
+.tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tag{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.26);
+  color:var(--muted);
+  padding:9px 12px;border-radius:999px;
+  font-weight:1400;font-size:12.5px;
+}
+.tag b{font-weight:1700}
+.tag.k b{color:var(--kohv)}
+.tag.d b{color:var(--dewp)}
+
+.hr{height:1px;background:rgba(255,255,255,.10);margin:14px 0 0}
+
+.req{
+  margin-top:16px;
+  display:grid;
+  gap:10px;
+}
 .reqItem{
-  padding:12px;border-radius:16px;
-  background:rgba(255,255,255,.06);
-  border:1px solid var(--line);
+  display:flex; align-items:flex-start; gap:12px;
+  padding:12px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.22);
+}
+.ico{
+  width:34px;height:34px;border-radius:14px;
+  display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+  flex:0 0 34px;
+}
+.txt{color:var(--muted); line-height:1.45}
+.txt b{color:rgba(255,255,255,.95)}
+
+/* ============ HOW + FAQ ============ */
+.columns{
+  display:grid; gap:16px;
+}
+@media(min-width:940px){ .columns{grid-template-columns:1.1fr .9fr} }
+
+.panel{
+  padding:18px;
+  border-radius:calc(var(--r) + 10px);
+}
+.panel h3{
+  margin:0 0 10px;
+  font-size:16px;
+  letter-spacing:.35px;
+}
+.panel p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.7;
 }
 
-/* FOOTER */
-.footer{
-  margin-top:30px;
-  padding:22px;
-  text-align:center;
-  border-radius:26px;
-  background:rgba(0,0,0,.4);
-  border:1px solid var(--line);
+.steps{margin-top:12px;display:grid;gap:10px}
+.step{
+  display:flex;gap:12px;
+  padding:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.22);
+  border-radius:18px;
 }
+.num{
+  width:38px;height:38px;border-radius:14px;
+  display:grid;place-items:center;
+  font-weight:1800;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+}
+.stepText{color:var(--muted);line-height:1.5}
+.stepText b{color:rgba(255,255,255,.95)}
+
+.faq{margin-top:12px;display:grid;gap:10px}
+.qa{
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.22);
+  border-radius:18px;
+  overflow:hidden;
+}
+.q{
+  width:100%;
+  cursor:pointer;
+  padding:13px 12px;
+  background:transparent;
+  border:0;
+  color:rgba(255,255,255,.92);
+  font-weight:1700;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  text-align:left;
+}
+.chev{
+  width:32px;height:32px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+  display:grid;place-items:center;
+  transition:transform .2s var(--ease);
+  flex:0 0 32px;
+}
+.a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .25s var(--ease);
+  padding:0 12px;
+}
+.aInner{
+  padding:0 0 12px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* ============ FOOTER ============ */
+.footer{
+  margin-top:22px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:calc(var(--r) + 10px);
+  background:rgba(0,0,0,.14);
+  backdrop-filter: blur(14px);
+  box-shadow:var(--shadow2);
+  padding:22px 18px;
+  text-align:center;
+}
+.footerMain{
+  font-size:20px;
+  font-weight:1800;
+  text-shadow:0 0 26px rgba(0,0,0,.95);
+}
+.footerSub{
+  margin-top:10px;
+  font-size:17px;
+  font-weight:1500;
+  color:#FFD166;
+  text-shadow:0 0 24px rgba(0,0,0,1);
+}
+.footerSub span{color:#7CFFF4}
+
+/* ============ BACK TO TOP ============ */
+.toTop{
+  position:fixed; right:16px; bottom:16px; z-index:80;
+  display:none;
+  border-radius:999px;
+  padding:11px 12px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(0,0,0,.40);
+  color:var(--text);
+  cursor:pointer;
+  font-weight:1800;
+  box-shadow:var(--shadow2);
+  backdrop-filter: blur(12px);
+}
+.toTop:hover{filter:brightness(1.08)}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:560px){
+  .heroInner{padding:22px 16px}
+  .nav{display:none}
+  .topbar{gap:8px}
+  .brandText{max-width:55vw}
+  .btn{width:100%}
+  .logo{width:64px;height:64px;border-radius:20px}
+  .name h3{font-size:26px}
+}
+
+/* ============ SIMPLE REVEAL (optional) ============ */
+.reveal{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease), transform .55s var(--ease)}
+.reveal.on{opacity:1;transform:translateY(0)}
 </style>
 </head>
 
 <body>
 <div class="bg"></div>
+<div class="noise"></div>
 
 <div class="wrap">
 
-<!-- TOPBAR -->
-<div class="topbar">
-  <div class="brand">
-    <div class="dot"></div>
-    KOHV & DEWP CLAN
-  </div>
-  <div class="nav">
-    <a href="#requirements">Requirements</a>
-    <a href="#how">How to Join</a>
-    <a href="#faq">FAQ</a>
-  </div>
-  <a class="btn" href="https://discord.gg/7WYcRBDGUf" target="_blank">Apply</a>
-</div>
-
-<!-- HERO -->
-<section class="glass hero" id="top">
-  <h1 class="h1">
-    <span class="kohv">KOHV</span> & <span class="dewp">DEWP</span> CLAN
-  </h1>
-
-  <div class="sub">
-    Competitive PS99 clans with <b>tons of giveaways</b>, events, and an active Discord.<br>
-    <b>Requirements are flexible</b> — apply even if you’re missing a few.
+  <!-- TOPBAR -->
+  <div class="topbar reveal">
+    <div class="brand">
+      <div class="dot"></div>
+      <div class="brandText">KOHV & DEWP CLAN</div>
+    </div>
+    <div class="nav">
+      <a href="#requirements">Requirements</a>
+      <a href="#how">How to Join</a>
+      <a href="#faq">FAQ</a>
+      <a href="#support">Support</a>
+    </div>
+    <a class="btn pill" href="https://discord.gg/7WYcRBDGUf" target="_blank" rel="noreferrer">🚀 Apply</a>
   </div>
 
-  <div class="actions">
-    <a class="btn secondary" href="#requirements">Requirements</a>
-    <a class="btn" href="https://discord.gg/7WYcRBDGUf" target="_blank">Apply in Discord</a>
-  </div>
+  <!-- HERO -->
+  <section class="glass hero reveal" id="top">
+    <div class="heroInner">
+      <h1 class="h1">
+        <span class="kohv">KOHV</span> & <span class="dewp">DEWP</span>
+        <span style="opacity:.92;font-weight:1400">CLAN</span>
+      </h1>
 
-  <!-- WHAT YOU GET -->
-  <div class="pills">
-    <div class="pill">🎁 Giveaways</div>
-    <div class="pill">⚔️ Clan Battles</div>
-    <div class="pill">⚡ Fast Review</div>
-    <div class="pill k">🏆 KOHV Top 8</div>
-    <div class="pill d">📈 DEWP as 2nd clan</div>
-  </div>
-</section>
+      <div class="sub">
+        Competitive PS99 clans with <b style="color:rgba(255,255,255,.92)">tons of giveaways</b>, events, and a super active Discord.
+        <br><b style="color:rgba(255,255,255,.92)">Requirements are flexible</b> — apply even if you’re missing a few.
+      </div>
 
-<!-- REQUIREMENTS -->
-<div class="sectionHead" id="requirements">
-  <h2>Requirements</h2>
-  <p>Pick the clan that matches your stats.</p>
-</div>
+      <div class="heroGrid">
+        <div>
+          <div class="actions">
+            <a class="btn secondary" href="#requirements">📋 Requirements</a>
+            <a class="btn" href="https://discord.gg/7WYcRBDGUf" target="_blank" rel="noreferrer">🚀 Apply in Discord</a>
+            <a class="btn secondary" href="#how">🧾 How to Join</a>
+          </div>
 
-<section class="grid">
-  <div class="glass">
-    <h3 class="kohv">KOHV — Top 8</h3>
-    <div class="req">
-      <div class="reqItem">24/7 AFK required</div>
-      <div class="reqItem">Rank 20+</div>
-      <div class="reqItem">15+ RB / Shiny Huges</div>
-      <div class="reqItem">20B+ value</div>
-      <div class="reqItem">Active on Discord</div>
+          <div class="callout">
+            📩 If you’re facing problems, DM <b>iidxpelord</b> or <b>bammiewas</b>
+            <div style="margin-top:8px;color:var(--muted2);font-weight:1200">
+              ⛔ Inactive on Discord & not replying to DM’s will be kicked.
+            </div>
+          </div>
+        </div>
+
+        <aside class="quickBox">
+          <p class="quickTitle">What you get</p>
+          <div class="pills">
+            <div class="pill">🎁 <b>Giveaways</b></div>
+            <div class="pill">⚔️ <b>Clan Battles</b></div>
+            <div class="pill">🌙 <b>AFK Rewards</b></div>
+            <div class="pill">⚡ <b>Fast Review</b></div>
+            <div class="pill k">🏆 <b>KOHV</b> top level</div>
+            <div class="pill d">📈 <b>DEWP</b> grow into KOHV</div>
+          </div>
+          <div style="margin-top:10px;color:var(--muted);line-height:1.7">
+            Don’t meet KOHV reqs? Apply to <b style="color:rgba(255,255,255,.92)">DEWP</b>.
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- REQUIREMENTS -->
+  <div class="sectionHead reveal" id="requirements">
+    <div>
+      <h2>Requirements</h2>
+      <p>Pick the clan that matches your stats. Flexible requirements.</p>
     </div>
   </div>
 
-  <div class="glass">
-    <h3 class="dewp">DEWP — 2nd Clan</h3>
-    <div class="req">
-      <div class="reqItem">16+ hours AFK</div>
-      <div class="reqItem">Rank 15+</div>
-      <div class="reqItem">40+ Huges</div>
-      <div class="reqItem">2.5B+ value</div>
-      <div class="reqItem">Active on Discord</div>
+  <section class="grid">
+    <!-- KOHV -->
+    <article class="glass clanCard reveal">
+      <div class="clanTop">
+        <div class="left">
+          <div class="logo">
+            <img src="https://cdn.discordapp.com/emojis/1454254211461021756.webp?size=96" alt="KOHV">
+          </div>
+          <div class="name">
+            <h3>KOHV</h3>
+            <div class="rank">🏆 Global Rank #9</div>
+          </div>
+        </div>
+        <div class="tags">
+          <div class="tag k">Clan: <b>KOHV</b></div>
+          <div class="tag">💎 High spend</div>
+          <div class="tag">🧠 Mastery heavy</div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="req">
+        <div class="reqItem"><div class="ico">🖥️</div><div class="txt"><b>24/7 AFK</b> required</div></div>
+        <div class="reqItem"><div class="ico">🎟️</div><div class="txt"><b>Rank 20+</b></div></div>
+        <div class="reqItem"><div class="ico">🚗</div><div class="txt"><b>15+ RB / Shiny Huges</b></div></div>
+        <div class="reqItem"><div class="ico">💎</div><div class="txt"><b>Able to spend 5B+</b> each battle if required</div></div>
+        <div class="reqItem"><div class="ico">🏆</div><div class="txt"><b>Maxed</b> important Masteries</div></div>
+        <div class="reqItem"><div class="ico">🧩</div><div class="txt"><b>Gamepasses:</b> Luck, Extra Hatches & Extra Enchant Slots</div></div>
+        <div class="reqItem"><div class="ico">💰</div><div class="txt"><b>20B+</b> Value</div></div>
+        <div class="reqItem"><div class="ico">📜</div><div class="txt"><b>Good</b> clan battle history</div></div>
+        <div class="reqItem"><div class="ico">👍</div><div class="txt"><b>Active</b> on Discord</div></div>
+      </div>
+    </article>
+
+    <!-- DEWP -->
+    <article class="glass clanCard reveal">
+      <div class="clanTop">
+        <div class="left">
+          <div class="logo">
+            <img src="https://th.bing.com/th/id/OIP.A9hu4BkX7mrthU8IIlMSxwAAAA?w=175&h=176&c=7&r=0&o=7&pid=1.7&rm=3" alt="DEWP">
+          </div>
+          <div class="name">
+            <h3>DEWP</h3>
+            <div class="rank">📈 Global Rank #58</div>
+          </div>
+        </div>
+        <div class="tags">
+          <div class="tag d">Clan: <b>DEWP</b></div>
+          <div class="tag">📈 Grow into KOHV</div>
+          <div class="tag">🖥️ AFK-friendly</div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="req">
+        <div class="reqItem"><div class="ico">🖥️</div><div class="txt"><b>16+ Hours AFK</b></div></div>
+        <div class="reqItem"><div class="ico">🎟️</div><div class="txt"><b>Rank 15+</b></div></div>
+        <div class="reqItem"><div class="ico">🚗</div><div class="txt"><b>40+ Huges</b></div></div>
+        <div class="reqItem"><div class="ico">💎</div><div class="txt"><b>Able to spend 250M+</b> each battle if required</div></div>
+        <div class="reqItem"><div class="ico">🏆</div><div class="txt"><b>80+</b> on Important Masteries</div></div>
+        <div class="reqItem"><div class="ico">💰</div><div class="txt"><b>2.5B+</b> Value</div></div>
+        <div class="reqItem"><div class="ico">👍</div><div class="txt"><b>Active</b> on Discord</div></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- HOW + FAQ -->
+  <div class="sectionHead reveal" id="how">
+    <div>
+      <h2>How to Join</h2>
+      <p>Follow these steps to get reviewed fast.</p>
     </div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<div class="footer" id="support">
-  ⛔ Inactive on Discord & not replying to DMs will be <b>KICKED</b><br><br>
-  📩 DM: <b>iidxpelord</b> • <b>bammiewas</b>
+  <section class="columns">
+    <div class="glass panel reveal">
+      <h3>🧾 How to Join</h3>
+      <p>Do these steps and you’ll get reviewed fast.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <div class="stepText"><b>Join the discord</b><br>Use the invite link (it opens the clan-apply channel).</div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div class="stepText"><b>Create a ticket in clan apply</b><br>Select whichever clan you are applying for.</div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div class="stepText"><b>Send screenshots of the details asked for</b><br>Masteries, Enchants, Gamepasses and Pets.</div>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <div class="stepText"><b>Be responsive and active</b><br>Inactive on Discord & not replying to DM’s will be kicked.</div>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:12px">
+        📩 If you’re facing problems, DM <b>iidxpelord</b> or <b>bammiewas</b>
+      </div>
+
+      <div class="actions">
+        <a class="btn secondary" href="#requirements">📋 Requirements</a>
+        <a class="btn" href="https://discord.gg/7WYcRBDGUf" target="_blank" rel="noreferrer">🚀 Apply in Discord</a>
+      </div>
+    </div>
+
+    <div class="glass panel reveal" id="faq">
+      <h3>❓ FAQ</h3>
+      <p>New FAQ (your exact text).</p>
+
+      <div class="faq">
+        <div class="qa">
+          <button class="q" type="button"><span>Is there a gem donation requirements?</span><div class="chev">⌄</div></button>
+          <div class="a"><div class="aInner">No, you do not have to donate gems to the clan unless you wish to.</div></div>
+        </div>
+
+        <div class="qa">
+          <button class="q" type="button"><span>Are alt accounts allowed?</span><div class="chev">⌄</div></button>
+          <div class="a"><div class="aInner">No we do not allow alt accounts to join the clan.</div></div>
+        </div>
+
+        <div class="qa">
+          <button class="q" type="button"><span>What if I don't meet the requirements?</span><div class="chev">⌄</div></button>
+          <div class="a"><div class="aInner">You can join our secondary clan called <b>DEWP</b>.</div></div>
+        </div>
+
+        <div class="qa">
+          <button class="q" type="button"><span>Can some exceptions be made?</span><div class="chev">⌄</div></button>
+          <div class="a"><div class="aInner">Yes our requirements are flexible so feel free to apply even if you are missing some requirements.</div></div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;color:var(--muted);line-height:1.7">
+        Tip: if you’re close to KOHV but missing 1–2 reqs, still apply — we review case-by-case.
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer reveal" id="support">
+    <div class="footerMain">⛔ Inactive on Discord & not replying to DM’s will be <b>KICKED</b></div>
+    <div class="footerSub">If you’re facing problems, DM: <span>iidxpelord</span> • <span>bammiewas</span></div>
+    <div class="actions" style="justify-content:center">
+      <a class="btn" href="https://discord.gg/7WYcRBDGUf" target="_blank" rel="noreferrer">🚀 Apply in Discord</a>
+      <a class="btn secondary" href="#top">↑ Back to top</a>
+    </div>
+  </div>
+
 </div>
 
-</div>
+<button class="toTop" id="toTop" title="Back to top">↑</button>
+
+<script>
+/* FAQ accordion */
+document.querySelectorAll(".qa").forEach((box)=>{
+  const btn = box.querySelector(".q");
+  const panel = box.querySelector(".a");
+  const chev = box.querySelector(".chev");
+
+  btn.addEventListener("click", ()=>{
+    const open = panel.style.maxHeight && panel.style.maxHeight !== "0px";
+    document.querySelectorAll(".qa .a").forEach(p=>p.style.maxHeight="0px");
+    document.querySelectorAll(".qa .chev").forEach(c=>c.style.transform="rotate(0deg)");
+    if(!open){
+      panel.style.maxHeight = panel.scrollHeight + "px";
+      chev.style.transform = "rotate(180deg)";
+    }
+  });
+});
+
+/* reveal */
+const revealEls = Array.from(document.querySelectorAll(".reveal"));
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("on"); });
+},{ threshold:.12 });
+revealEls.forEach(el=>io.observe(el));
+
+/* back to top button */
+const toTop = document.getElementById("toTop");
+window.addEventListener("scroll", ()=>{
+  toTop.style.display = (window.scrollY > 500) ? "block" : "none";
+});
+toTop.onclick = ()=> window.scrollTo({ top:0, behavior:"smooth" });
+
+/* smooth anchors */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener("click", (e)=>{
+    const id = a.getAttribute("href");
+    const el = document.querySelector(id);
+    if(!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior:"smooth", block:"start" });
+  });
+});
+</script>
 </body>
 </html>
