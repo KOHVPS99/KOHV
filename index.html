@@ -6,7 +6,6 @@
 <title>KOHV & DEWP CLAN — PS99 Recruiting</title>
 
 <style>
-/* ============ RESET ============ */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -19,7 +18,6 @@ body{
 a{color:inherit}
 button{font:inherit}
 
-/* ============ THEME ============ */
 :root{
   --kohv:#8B5CFF;
   --dewp:#33E6A6;
@@ -44,7 +42,6 @@ button{font:inherit}
   --ease:cubic-bezier(.2,.9,.2,1);
 }
 
-/* ============ BACKGROUND (YOUR GIF) ============ */
 .bg{
   position:fixed; inset:0; z-index:-10;
   background:url("https://media.discordapp.net/attachments/1385938698356392077/1454271317955186931/IMG_2396.gif?ex=69507b35&is=694f29b5&hm=408e10e8d1f932f3af215d348e36c7d0f41775be3150bc7f6ef11739a5a1eac0&=") center/cover no-repeat;
@@ -57,7 +54,6 @@ button{font:inherit}
     linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.90));
 }
 
-/* noise */
 .noise{
   position:fixed; inset:0; z-index:-9; pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
@@ -65,7 +61,6 @@ button{font:inherit}
   opacity:.32;
 }
 
-/* ============ LAYOUT ============ */
 .wrap{
   max-width:1160px;
   margin:0 auto;
@@ -91,7 +86,6 @@ button{font:inherit}
 }
 .glass > *{position:relative}
 
-/* ============ TOP BAR ============ */
 .topbar{
   position:sticky; top:10px; z-index:50;
   border:1px solid var(--line);
@@ -145,7 +139,6 @@ button{font:inherit}
   border-color:rgba(255,255,255,.12);
 }
 
-/* ============ BUTTONS ============ */
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:10px;
   padding:14px 18px;
@@ -172,7 +165,6 @@ button{font:inherit}
   font-size:13px;
 }
 
-/* ============ HERO ============ */
 .hero{margin-top:14px}
 .heroInner{padding:28px 22px}
 
@@ -240,7 +232,6 @@ button{font:inherit}
 .callout b{color:rgba(255,255,255,.92)}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 
-/* ============ SECTIONS ============ */
 .sectionHead{
   margin:24px 0 10px;
   display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;
@@ -257,7 +248,6 @@ button{font:inherit}
   font-size:13px;
 }
 
-/* ============ CLAN CARDS ============ */
 .grid{
   display:grid;
   gap:16px;
@@ -320,7 +310,6 @@ button{font:inherit}
 .txt{color:var(--muted); line-height:1.45}
 .txt b{color:rgba(255,255,255,.95)}
 
-/* ============ HOW + FAQ ============ */
 .columns{
   display:grid; gap:16px;
 }
@@ -397,7 +386,6 @@ button{font:inherit}
   line-height:1.7;
 }
 
-/* ============ FOOTER ============ */
 .footer{
   margin-top:22px;
   border:1px solid rgba(255,255,255,.18);
@@ -422,7 +410,6 @@ button{font:inherit}
 }
 .footerSub span{color:#7CFFF4}
 
-/* ============ BACK TO TOP ============ */
 .toTop{
   position:fixed; right:16px; bottom:16px; z-index:80;
   display:none;
@@ -438,7 +425,6 @@ button{font:inherit}
 }
 .toTop:hover{filter:brightness(1.08)}
 
-/* ============ RESPONSIVE ============ */
 @media(max-width:560px){
   .heroInner{padding:22px 16px}
   .nav{display:none}
@@ -449,7 +435,6 @@ button{font:inherit}
   .name h3{font-size:26px}
 }
 
-/* ============ SIMPLE REVEAL (optional) ============ */
 .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease), transform .55s var(--ease)}
 .reveal.on{opacity:1;transform:translateY(0)}
 </style>
@@ -461,7 +446,6 @@ button{font:inherit}
 
 <div class="wrap">
 
-  <!-- TOPBAR -->
   <div class="topbar reveal">
     <div class="brand">
       <div class="dot"></div>
@@ -476,7 +460,6 @@ button{font:inherit}
     <a class="btn pill" href="https://discord.gg/7WYcRBDGUf" target="_blank" rel="noreferrer">🚀 Apply</a>
   </div>
 
-  <!-- HERO -->
   <section class="glass hero reveal" id="top">
     <div class="heroInner">
       <h1 class="h1">
@@ -510,7 +493,6 @@ button{font:inherit}
           <div class="pills">
             <div class="pill">🎁 <b>Giveaways</b></div>
             <div class="pill">⚔️ <b>Clan Battles</b></div>
-            <!-- AFK Rewards removed -->
             <div class="pill">⚡ <b>Fast Review</b></div>
             <div class="pill k">🏆 <b>KOHV Top 8</b></div>
             <div class="pill d">📈 <b>DEWP</b> 2nd clan grows into KOHV</div>
@@ -523,7 +505,6 @@ button{font:inherit}
     </div>
   </section>
 
-  <!-- REQUIREMENTS -->
   <div class="sectionHead reveal" id="requirements">
     <div>
       <h2>Requirements</h2>
@@ -532,7 +513,6 @@ button{font:inherit}
   </div>
 
   <section class="grid">
-    <!-- KOHV -->
     <article class="glass clanCard reveal">
       <div class="clanTop">
         <div class="left">
@@ -566,7 +546,6 @@ button{font:inherit}
       </div>
     </article>
 
-    <!-- DEWP -->
     <article class="glass clanCard reveal">
       <div class="clanTop">
         <div class="left">
@@ -599,7 +578,6 @@ button{font:inherit}
     </article>
   </section>
 
-  <!-- HOW + FAQ -->
   <div class="sectionHead reveal" id="how">
     <div>
       <h2>How to Join</h2>
@@ -673,7 +651,6 @@ button{font:inherit}
     </div>
   </section>
 
-  <!-- FOOTER -->
   <div class="footer reveal" id="support">
     <div class="footerMain">⛔ Inactive on Discord & not replying to DM’s will be <b>KICKED</b></div>
     <div class="footerSub">If you’re facing problems, DM: <span>iidxpelord</span> • <span>bammiewas</span></div>
@@ -688,7 +665,6 @@ button{font:inherit}
 <button class="toTop" id="toTop" title="Back to top">↑</button>
 
 <script>
-/* FAQ accordion */
 document.querySelectorAll(".qa").forEach((box)=>{
   const btn = box.querySelector(".q");
   const panel = box.querySelector(".a");
@@ -705,21 +681,18 @@ document.querySelectorAll(".qa").forEach((box)=>{
   });
 });
 
-/* reveal */
 const revealEls = Array.from(document.querySelectorAll(".reveal"));
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("on"); });
 },{ threshold:.12 });
 revealEls.forEach(el=>io.observe(el));
 
-/* back to top button */
 const toTop = document.getElementById("toTop");
 window.addEventListener("scroll", ()=>{
   toTop.style.display = (window.scrollY > 500) ? "block" : "none";
 });
 toTop.onclick = ()=> window.scrollTo({ top:0, behavior:"smooth" });
 
-/* smooth anchors */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener("click", (e)=>{
     const id = a.getAttribute("href");
